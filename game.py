@@ -32,7 +32,7 @@ class Game:
 
         forest = Room("Forest", "dans une forêt lugubre. Vous entendez une brise légère à travers la cime des arbres.")
         self.rooms.append(forest)
-        entry = Room("Entry", "entrez dans le manoir. Vous êtes dans un hall sombre et effreyant.")
+        entry = Room("Entry", "dans l'entrée du manoir. Vous êtes dans un hall sombre et effrayant.")
         self.rooms.append(entry)
         kitchen = Room("Kitchen", "dans une cuisine macabre. La piece est couverte de sang et le frigo est rempli d'organes humain.")
         self.rooms.append(kitchen)
@@ -40,7 +40,7 @@ class Game:
         self.rooms.append(living_room)
         stairs= Room("Stairs", "devant la cage d'escalier.Vous  avez deja fouiller toute les pièces et il n'y a pas la clé de la sortie. Vous devez monter pour trouver la clé de la sortie et la voiture.")
         self.rooms.append(stairs)
-        exit = Room("Exit", "devant la sortie mais la porte est fermée à clé. Vous voyez une voiture a l'extérieure qui peut vous aideés à sortire de la forêt.")
+        exit = Room("Exit", "devant la sortie mais la porte est fermée à clé. Vous voyez une voiture a l'extérieure qui peut vous aider à sortir de la forêt.")
         self.rooms.append(exit)
         office = Room("Offfice", "dans un bureau remplis d'armes . La pièce ressemble a une chambre de torture.")
         self.rooms.append(office)
@@ -64,7 +64,7 @@ class Game:
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
-        self.player.current_room = swamp
+        self.player.current_room = forest
 
     # Play the game
     def play(self):
