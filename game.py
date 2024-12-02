@@ -51,12 +51,15 @@ class Game:
 
         # Create exits for rooms
 
-        forest.exits = {"N" : cave, "E" : None, "S" : castle, "O" : None}
-        tower.exits = {"N" : cottage, "E" : None, "S" : None, "O" : None}
-        cave.exits = {"N" : None, "E" : cottage, "S" : forest, "O" : None}
-        cottage.exits = {"N" : None, "E" : None, "S" : tower, "O" : cave}
-        swamp.exits = {"N" : tower, "E" : None, "S" : None, "O" : castle}
-        castle.exits = {"N" : forest, "E" : swamp, "S" : None, "O" : None}
+        forest.exits = {"N" :entry, "E" : None, "S" : None, "O" : None,"U": None,"D": None}
+        entry.exits = {"N" : None, "E" : living_room, "S" : None, "O" : kitchen,"U": None,"D": None}
+        living_room.exits = {"N" : exit, "E" : None, "S" : None, "O" : entry,"U": None,"D": None}
+        kitchen.exits = {"N" : stairs, "E" : entry, "S" : None, "O" : None,"U": None,"D": None}
+        stairs.exits = {"N" : None, "E" : None, "S" : kitchen, "O" : None,"U" : office}
+        office.exits = {"N" : None, "E" : bedroom, "S" : None, "O" : None,"U": None,"D": stairs}
+        bedroom.exits = {"N" : chapel, "E" : None, "S" : None, "O" : office,"U": None,"D": None}
+        chapel.exits = {"N" : None, "E" : None, "S" : bedroom, "O" : None,"U": None,"D": None}
+        exit.exits = {"N" : None, "E" : None, "S" : living_room, "O" : None,"U": None,"D": None}
 
         # Setup player and starting room
 
