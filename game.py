@@ -30,18 +30,24 @@ class Game:
         
         # Setup rooms
 
-        forest = Room("Forest", "dans une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
+        forest = Room("Forest", "dans une forêt lugubre. Vous entendez une brise légère à travers la cime des arbres.")
         self.rooms.append(forest)
-        tower = Room("Tower", "dans une immense tour en pierre qui s'élève au dessus des nuages.")
-        self.rooms.append(tower)
-        cave = Room("Cave", "dans une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
-        self.rooms.append(cave)
-        cottage = Room("Cottage", "dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
-        self.rooms.append(cottage)
-        swamp = Room("Swamp", "dans un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
-        self.rooms.append(swamp)
-        castle = Room("Castle", "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
-        self.rooms.append(castle)
+        entry = Room("Entry", "entrez dans le manoir. Vous êtes dans un hall sombre et effreyant.")
+        self.rooms.append(entry)
+        kitchen = Room("Kitchen", "dans une cuisine macabre. La piece est couverte de sang et le frigo est rempli d'organes humain.")
+        self.rooms.append(kitchen)
+        living_room = Room("Living room", "dans un salon maudit remplis d'âmes errante.")
+        self.rooms.append(living_room)
+        stairs= Room("Stairs", "devant la cage d'escalier.Vous  avez deja fouiller toute les pièces et il n'y a pas la clé de la sortie. Vous devez monter pour trouver la clé de la sortie et la voiture.")
+        self.rooms.append(stairs)
+        exit = Room("Exit", "devant la sortie mais la porte est fermée à clé. Vous voyez une voiture a l'extérieure qui peut vous aideés à sortire de la forêt.")
+        self.rooms.append(exit)
+        office = Room("Offfice", "dans un bureau remplis d'armes . La pièce ressemble a une chambre de torture.")
+        self.rooms.append(office)
+        chapel = Room("Chapel", "dans une pièce ammenager come une chapelle.Elle est completement detruite")
+        self.rooms.append(chapel)
+        bedroom = Room("Bedroom", "dans une plein de tache de sang. La chambre est completement rouge.")
+        self.rooms.append(bedroom)
 
         # Create exits for rooms
 
