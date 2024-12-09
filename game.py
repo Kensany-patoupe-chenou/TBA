@@ -97,10 +97,10 @@ class Game:
     # Print the welcome message
     def print_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'horreur et de survie !")
-        print("Votre voiture est tombée en panne au bord d'une forêt l'hors d'un voyage ou vous voyez un manoir au loin.")
-        print("Vous entrez dans la forêt pour essayé de trouver le manoir.")
-        print("vous y arrivé mais le manoir donne l'air d'etre abandoné donc vous décidez de faire demi-tour")
-        print("Malheureseument vous etes perdue et decidez donc de prendre refuge dans le manoir")
+        print("Votre voiture est tombée en panne au bord d'une forêt lors d'un voyage et vous apercevez un manoir au loin.")
+        print("Vous entrez dans la forêt pour rejoindre le manoir.")
+        print("vous arrivez devant le manoir qui a l'air d'être abandoné,donc vous décidez de faire demi-tour")
+        print("Malheureseument vous êtes perdue et decidez donc de retourner prendre refuge dans le manoir")
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
         print(self.player.current_room.get_long_description())
