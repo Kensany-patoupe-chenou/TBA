@@ -21,7 +21,7 @@ class Actions:
     def go(game, list_of_words, number_of_parameters):
         """
         Move the player in the direction specified by the parameter.
-        The parameter must be a cardinal direction (N, E, S, O, U, D).
+        The parameter must be a cardinal direction (N, E, S, O, U, D, or alias ).
 
         Args:
             game (Game): The game object.
@@ -52,11 +52,31 @@ class Actions:
             command_word = list_of_words[0]
             print(MSG1.format(command_word=command_word))
             return False
+        
+        # Liste des directions valides
+        direction = {"n": ["n", "nord"],
+                     "e": ["e", "est"],
+                     "s": ["s", "sud"],
+                     "o": ["o", "ouest"],
+                     "u": ["u", "haut"],
+                     "d": ["d", "bas"] }
 
         # Get the direction from the list of words.
-        direction = list_of_words[1]
+        direction_input = list_of_words[1].lower()
+
+        # Check if the direction is valid (by checking the aliases).
+        valid_direction = None
+        for main_direction, alias in direction.items():
+            if direction_input in alias:
+                valid_direction = main_direction
+                break
+
+        # If the direction is not recognized, print an error message
+        if valid_direction is None:
+            print(f"\nDirection: '{direction_input}' non reconnue.\n")
+            return False
         # Move the player in the direction specified by the parameter.
-        player.move(direction)
+        player.move(valid_direction)
         return True
 
     def quit(game, list_of_words, number_of_parameters):

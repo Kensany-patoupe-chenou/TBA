@@ -27,6 +27,8 @@ class Game:
         self.commands["quit"] = quit
         go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
         self.commands["go"] = go
+        help = Command("help", " : afficher cette aide", Actions.help, 0, "help_alias")
+
         
         # Setup rooms
 
@@ -82,11 +84,11 @@ class Game:
         # Split the command string into a list of words
         list_of_words = command_string.split(" ")
 
-        command_word = list_of_words[0]
+        command_word = list_of_words[0].lower()
 
         # If the command is not recognized, print an error message
         if command_word not in self.commands.keys():
-            print(f"")
+            print(f"\nDirection '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
         # If the command is recognized, execute it
         else:
             command = self.commands[command_word]
@@ -94,7 +96,11 @@ class Game:
 
     # Print the welcome message
     def print_welcome(self):
-        print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
+        print(f"\nBienvenue {self.player.name} dans ce jeu d'horreur et de survie !")
+        print("Votre voiture est tombée en panne au bord d'une forêt l'hors d'un voyage ou vous voyez un manoir au loin.")
+        print("Vous entrez dans la forêt pour essayé de trouver le manoir.")
+        print("vous y arrivé mais le manoir donne l'air d'etre abandoné donc vous décidez de faire demi-tour")
+        print("Malheureseument vous etes perdue et decidez donc de prendre refuge dans le manoir")
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
         print(self.player.current_room.get_long_description())
@@ -103,7 +109,6 @@ class Game:
 def main():
     # Create a game object and play the game
     Game().play()
-    
 
 if __name__ == "__main__":
     main()

@@ -8,6 +8,17 @@ class Player():
     
     # Define the move method.
     def move(self, direction):
+
+        """Move the player in the specified direction."""
+        
+        # Ensure the direction is valid in the current room's exits.
+
+        direction = direction.upper()
+        
+        if direction not in self.current_room.exits:
+            print(f"\nDirection '{direction}' non valide dans cette pièce.\n")
+            return False
+
         # Get the next room from the exits dictionary of the current room.
         next_room = self.current_room.exits[direction]
 
