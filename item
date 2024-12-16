@@ -1,0 +1,13 @@
+class item:
+    def__init__(self,name,description,weight):
+       self.name= name
+       self.description= description
+       self.weight= weight
+     __str__(self):
+       return item({self.name},{self.description},{self.weight})
+
+
+
+gun= item('gun','un fusil à pompe prêt à être dégainer à bout portant','3.5kg')
+knife=item('kinife','un couteau tranchant pour un massacre amusant','70g')
+key=item('key','des clés! par ici la sortie','1g')
