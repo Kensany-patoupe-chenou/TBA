@@ -17,7 +17,6 @@ MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
 
 class Actions:
-
     def go(game, list_of_words, number_of_parameters):
         """
         Move the player in the direction specified by the parameter.
@@ -63,6 +62,7 @@ class Actions:
 
         # Get the direction from the list of words.
         direction_input = list_of_words[1].lower()
+    
 
         # Check if the direction is valid (by checking the aliases).
         valid_direction = None
@@ -77,7 +77,10 @@ class Actions:
             return False
         # Move the player in the direction specified by the parameter.
         player.move(valid_direction)
+        print(player.current_room.get_long_description())
+        print("\n" + player.get_history())
         return True
+        return False
 
     def quit(game, list_of_words, number_of_parameters):
         """
@@ -157,3 +160,51 @@ class Actions:
             print("\t- " + str(command))
         print()
         return True
+    
+    def back(game, list_of_words, number_of_parameters):
+        """
+    Move the player back to the previous room.
+
+    Args:
+        game (Game): The game object.
+        list_of_words (list): The list of words in the command.
+        number_of_parameters (int): The number of parameters expected by the command.
+
+    Returns:
+        bool: True if the command was executed successfully, False otherwise.
+
+    Examples:
+        
+        >>> from game import Game
+        >>> game = Game()
+        >>> game.setup()
+        >>> back(game, ["back"], 1)
+        True
+        >>> back(game, ["back", "N", "E"], 1)
+        False
+        >>> back , (game, ["back"], 1)
+        False
+
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+        
+        player=game.player
+
+        # Verifying if it is possible to go back
+        if len(player.history) < 2:
+            print("\nImpossible de revenir en arrière, vous n'avez visité qu'une seule pièce ou aucune.\n")
+            return False
+
+        #Removing the room from the history and going back to the room before
+        player.history.pop() 
+        previous_room_name = player.history[-1]  
+        previous_room = next(room for room in game.rooms if room.name == previous_room_name) 
+        player.current_room = previous_room  
+        print(previous_room.get_long_description())
+        print("\n" + player.get_history())
+        return True
+    

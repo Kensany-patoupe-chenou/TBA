@@ -20,13 +20,14 @@ class Game:
     def setup(self):
 
         # Setup commands
-
         help = Command("help", " : afficher cette aide", Actions.help, 0)
         self.commands["help"] = help
         quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
         self.commands["quit"] = quit
         go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
         self.commands["go"] = go
+        back = Command("back", " : revenir à la pièce précédente", Actions.back, 0)
+        self.commands["back"] = back
         help = Command("help", " : afficher cette aide", Actions.help, 0, "help_alias")
 
         
@@ -67,6 +68,7 @@ class Game:
 
         self.player = Player(input("\nEntrez votre nom: "))
         self.player.current_room = forest
+        self.player.history.append(self.player.current_room.name)
 
     # Play the game
     def play(self):
@@ -76,6 +78,8 @@ class Game:
         while not self.finished:
             # Get the command from the player
             self.process_command(input("> "))
+            
+
         return None
 
     # Process the command entered by the player
@@ -93,7 +97,6 @@ class Game:
         else:
             command = self.commands[command_word]
             command.action(self, list_of_words, command.number_of_parameters)
-
     # Print the welcome message
     def print_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'horreur et de survie !")
@@ -104,7 +107,7 @@ class Game:
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
         print(self.player.current_room.get_long_description())
-    
+
 
 def main():
     # Create a game object and play the game
