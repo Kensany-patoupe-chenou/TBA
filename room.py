@@ -7,6 +7,7 @@ class Room:
         self.name = name
         self.description = description
         self.exits = {}
+        self.inventory_items={}
 
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -29,4 +30,42 @@ class Room:
     # Return a long description of this room including exits.
     def get_long_description(self):
         return f"\nVous êtes {self.description}\n\n{self.get_exit_string()}\n"
+    
+
+    def get_inventory_items(self):
+        if len(self.inventory_items) == 0:
+            print("Il n'y a rien ici dans cette pièce")
+        else:
+            print("La pièce contient :")
+            for item in self.inventory_items.values():
+                print(f"    - {item.name} : {item.description} ({item.weight})")
+
+    
+
+    def take(self, name_item, player):
+        
+       if name_item in self.inventory_items:
+            item = self.inventory_items[name_item]
+            player.inventory[name_item] = item  # Ajoute l'item à l'inventaire du joueur
+            del self.inventory_items[name_item]  # Retire l'item de la pièce
+            print(f"Vous avez pris {item.name}.")
+
+
+    def drop(self, name_item, player):
+       
+       if name_item in player.inventory:
+            item = player.inventory[name_item]
+            self.inventory_items[name_item] = item  # Ajoute l'item à la pièce
+            del player.inventory[name_item]  # Retire l'item de l'inventaire du joueur
+            print(f"Vous avez déposé {item.name}.")
+
+    def look(self):
+       if len(self.inventory_items) == 0:
+           print("Il n'y a rien dans cette pièce.")
+       else:
+           print("La pièce contient les objets suivants :")
+           for item in self.inventory_items.values():
+               print(f"    - {item.name} : {item.description} ({item.weight})")
+
+    
         

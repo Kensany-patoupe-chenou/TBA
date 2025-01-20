@@ -12,6 +12,9 @@
 
 # The error message is stored in the MSG0 and MSG1 variables and formatted with the command_word variable, the first word in the command.
 # The MSG0 variable is used when the command does not take any parameter.
+import game
+
+
 MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 # The MSG1 variable is used when the command takes 1 parameter.
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
@@ -208,3 +211,40 @@ class Actions:
         print("\n" + player.get_history())
         return True
     
+
+    def look(game, list_of_words, number_of_parameters):
+        """Affiche les items présents dans la pièce actuelle."""
+        game.player.current_room.look()
+    
+    def take(game, list_of_words, number_of_parameters):
+       """Permet au joueur de prendre un item."""
+       
+       if len(list_of_words) != number_of_parameters + 1:
+           print("Erreur dans le nombre de paramètres.")
+           return False
+        
+       name_item = list_of_words[1].lower()
+       game.player.current_room.take(name_item, game.player)
+       
+       return True
+
+
+    def drop(game, list_of_words, number_of_parameters):
+       if len(list_of_words) != number_of_parameters + 1:
+           print("Erreur dans le nombre de paramètres.")
+           return False
+        
+       name_item = list_of_words[1].lower()
+       game.player.current_room.drop(name_item, game.player)
+       
+       return True
+
+    def check(game, list_of_words, number_of_parameters):
+        """Affiche l'inventaire du joueur."""
+        player = game.player
+        if len(player.inventory) == 0:
+            print("Il n'y a rien dans votre inventaire.")
+        else:
+            print("Vous avez dans votre inventaire :")
+            for item in player.inventory.values():
+                print(f"    - {item.name} : {item.description} ({item.weight})")

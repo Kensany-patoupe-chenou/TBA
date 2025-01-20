@@ -2,10 +2,10 @@
 
 # Import modules
 
+from item import Item
 from room import Room
 from player import Player
 from command import Command
-from actions import Actions
 
 class Game:
 
@@ -18,6 +18,7 @@ class Game:
     
     # Setup the game
     def setup(self):
+        from actions import Actions
 
         # Setup commands
         help = Command("help", " : afficher cette aide", Actions.help, 0)
@@ -29,6 +30,18 @@ class Game:
         back = Command("back", " : revenir à la pièce précédente", Actions.back, 0)
         self.commands["back"] = back
         help = Command("help", " : afficher cette aide", Actions.help, 0, "help_alias")
+        look = Command("look", ": observer l'environnement", Actions.look, 0)
+        self.commands["look"] = look
+
+        take= Command("take", "nom_item : Pour prendre un objet", Actions.take, 1)
+        self.commands["take"] = take
+
+        drop = Command("drop", "nom_item : Pour déposé un objet", Actions.drop, 1)
+        self.commands["drop"] = drop
+
+        check = Command("check", ": afficher votre inventaire", Actions.check, 0)
+        self.commands["check"] = check
+
 
         
         # Setup rooms
@@ -37,20 +50,40 @@ class Game:
         self.rooms.append(forest)
         entry = Room("Entry", "dans l'entrée du manoir. Vous êtes dans un hall sombre et effrayant.")
         self.rooms.append(entry)
+        lampe = Item('lampe', 'une lampe pour tenter de térasser l\'obscurité', '70g')
+        entry.inventory_items["lampe"] =lampe
+
+
+
         kitchen = Room("Kitchen", "dans une cuisine macabre. La piece est couverte de sang et le frigo est rempli d'organes humain.")
         self.rooms.append(kitchen)
+        couteau = Item('couteau', 'un couteau tranchant pour un massacre amusant', '70g')
+        kitchen.inventory_items["couteau"] = couteau
+
+
         living_room = Room("Living room", "dans un salon maudit remplis d'âmes errante.")
         self.rooms.append(living_room)
+        fusil = Item('fusil', 'un fusil à pompe prêt à être dégainé à bout portant', '3.5kg')
+        living_room.inventory_items["fusil"] = fusil
+
+
+
         stairs= Room("Stairs", "devant la cage d'escalier.Vous  avez deja fouiller toute les pièces et il n'y a pas la clé de la sortie. Vous devez monter pour trouver la clé de la sortie et la voiture.")
         self.rooms.append(stairs)
         exit = Room("Exit", "devant la sortie mais la porte est fermée à clé. Vous voyez une voiture a l'extérieure qui peut vous aider à sortir de la forêt.")
         self.rooms.append(exit)
         office = Room("Offfice", "dans un bureau remplis d'armes . La pièce ressemble a une chambre de torture.")
         self.rooms.append(office)
+        clé_sortie= Item('clé_sortie', 'les clés de la porte de sortie', '1g')
+        office.inventory_items["clé_sortie"] = clé_sortie
+
+
         chapel = Room("Chapel", "dans une pièce ammenager come une chapelle.Elle est completement detruite")
         self.rooms.append(chapel)
         bedroom = Room("Bedroom", "dans une plein de tache de sang. La chambre est completement rouge.")
         self.rooms.append(bedroom)
+        clé_voiture = Item('lé_voiture', 'les clés de la voiture', '1g')
+        bedroom.inventory_items["clé_voiture"] = clé_voiture
 
         # Create exits for rooms
 
