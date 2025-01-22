@@ -24,42 +24,33 @@ class Game:
         """Configure le jeu en initialisant les commandes, les pièces et les objets."""
         from actions import Actions
         # Setup commands
-        help = Command("help", " : afficher cette aide", Actions.help, 0)
-        self.commands["help"] = help
-        quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
-        self.commands["quit"] = quit
-        go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
-        self.commands["go"] = go
-        back = Command("back", " : revenir à la pièce précédente", Actions.back, 0)
-        self.commands["back"] = back
-        look = Command("look", ": observer l'environnement", Actions.look, 0)
-        self.commands["look"] = look
-        take= Command("take", "nom_item : Pour prendre un objet", Actions.take, 1)
-        self.commands["take"] = take
-        drop = Command("drop", "nom_item : Pour déposé un objet", Actions.drop, 1)
-        self.commands["drop"] = drop
-        check = Command("check", ": afficher votre inventaire", Actions.check, 0)
-        self.commands["check"] = check
-        talk = Command("talk", " <personnage> : parler à un personnage", Actions.talk, 1)
-        self.commands["talk"] = talk
+        self.commands["help"] = Command("help", " : afficher cette aide", Actions.help, 0)
+        self.commands["quit"] = Command("quit", " : quitter le jeu", Actions.quit, 0)
+        self.commands["go"] = Command("go", """ <direction> : se déplacer dans une direction cardinale (N, E, S, O)""", Actions.go, 1)
+        self.commands["back"] = Command("back", " : revenir à la pièce précédente", Actions.back, 0)
+        self.commands["look"] = Command("look", ": observer l'environnement", Actions.look, 0)
+        self.commands["take"] = Command("take", "nom_item : Pour prendre un objet", Actions.take, 1)
+        self.commands["drop"] = Command("drop", "nom_item : Pour déposé un objet", Actions.drop, 1)
+        self.commands["check"] = Command("check", ": afficher votre inventaire", Actions.check, 0)
+        self.commands["talk"] = Command("talk", """ <personnage> : parler à un personnage""", Actions.talk, 1)
         # Setup rooms
-        forest = Room("Forest", "dans une forêt lugubre. Vous entendez une brise légère à travers la cime des arbres.")
+        forest = Room("Forest", """dans une forêt lugubre. Vous entendez une brise légère à travers la cime des arbres.""")
         self.rooms.append(forest)
-        entry = Room("Entry", "dans l'entrée du manoir. Vous êtes dans un hall sombre et effrayant.")
+        entry = Room("Entry", """dans l'entrée du manoir. Vous êtes dans un hall sombre et effrayant.""")
         self.rooms.append(entry)
-        kitchen = Room("Kitchen", "dans une cuisine macabre. La piece est couverte de sang et le frigo est rempli d'organes humain.")
+        kitchen = Room("Kitchen", """dans une cuisine macabre. La piece est couverte de sang et le frigo est rempli d'organes humain.""")
         self.rooms.append(kitchen)
         living_room = Room("Living room", "dans un salon maudit remplis d'âmes errante.")
         self.rooms.append(living_room)
         stairs= Room("Stairs", "devant la cage d'escalier.")
         self.rooms.append(stairs)
-        exit = Room("Exit", "devant la sortie mais la porte est fermée à clé. Vous voyez une voiture a l'extérieure qui peut vous aider à sortir de la forêt.")
+        exit = Room("Exit", """devant la sortie mais la porte est fermée à clé. Vous voyez une voiture a l'extérieure qui peut vous aider à sortir de la forêt.""")
         self.rooms.append(exit)
-        office = Room("Offfice", "dans un bureau remplis d'armes . La pièce ressemble a une chambre de torture.")
+        office = Room("Offfice", """dans un bureau remplis d'armes .La pièce ressemble a une chambre de torture.""")
         self.rooms.append(office)
-        chapel = Room("Chapel", "dans une pièce ammenager come une chapelle.Elle est completement detruite")
+        chapel = Room("Chapel", """dans une pièce ammenager come une chapelle.""Elle est completement detruite""")
         self.rooms.append(chapel)
-        bedroom = Room("Bedroom", "dans une chambre plein de tache de sang. La chambre est completement rouge.")
+        bedroom = Room("Bedroom", """dans une chambre plein de tache de sang. La chambre est completement rouge.""")
         self.rooms.append(bedroom)
         # Setup inventory
         clé_sortie= Item('clé_sortie', 'les clés de la porte de sortie', '1g')
@@ -87,7 +78,7 @@ class Game:
         self.player.current_room = forest
         self.player.history.append(self.player.current_room.name)
         # Creating the NPC
-        self.npc= Character("Anthony", "Un tueur en série à l'apparence de Jeffrey Dahmer", forest, ["Je chasse ma prochaine victime !"],game=self, debug=self.DEBUG)
+        self.npc= Character("Anthony", """Un tueur en série à l'apparence de Jeffrey Dahmer""", forest, ["Je chasse ma prochaine victime !"],game=self, debug=self.DEBUG)
         #Assigning NPC to room
         self.rooms[0].characters[self.npc.name] = self.npc
     def create_anthony(self):
@@ -100,7 +91,6 @@ class Game:
         """Boucle principale du jeu."""
         self.setup() 
         self.print_welcome()
-        # Loop until the game is finished
         while not self.finished:
             self.npc.move()
             self.process_command(input("> "))

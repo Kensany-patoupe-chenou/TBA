@@ -91,7 +91,6 @@ class Actions:
         print("\nVous êtes face à la sortie.\n \n Il ne manquais plus que ça, une énigme. Il faut vite la ressoudre.")
         print("Une enigme apparait devant vous :")
         print("Je meurs chaque nuit pour renaître à l'aube. Qui suis-je ?")
-
         chances = 2
         while chances > 0:
             answer = input("Votre réponse : ").lower()
@@ -107,7 +106,7 @@ class Actions:
                     print("\nOHH MINCE!!!\n\n Anthony vous a r'attrapé.\n\n VOUS ETES MORT")
                     game.finished = True
                     return
-            
+         
     def quit(game, list_of_words, number_of_parameters):
         """
         Quit the game.
