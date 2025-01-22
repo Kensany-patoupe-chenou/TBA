@@ -46,4 +46,3 @@ class Player():
            print("Vous avez dans votre inventaire :")
            for item in self.inventory.values():
                print(f"    - {item.name} : {item.description} ({item.weight})")
-    

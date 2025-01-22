@@ -8,6 +8,7 @@ class Room:
         self.description = description
         self.exits = {}
         self.inventory_items={}
+        self.characters = {}
 
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -60,12 +61,17 @@ class Room:
             print(f"Vous avez déposé {item.name}.")
 
     def look(self):
+       # Looking for item in the room
        if len(self.inventory_items) == 0:
            print("Il n'y a rien dans cette pièce.")
        else:
-           print("La pièce contient les objets suivants :")
-           for item in self.inventory_items.values():
-               print(f"    - {item.name} : {item.description} ({item.weight})")
-
-    
-        
+            if len(self.inventory_items) > 0:
+                print("La pièce contient les objets suivants :")
+                for item in self.inventory_items.values():
+                    print(f"    - {item.name} : {item.description} ({item.weight})")
+            # Looking for NPC in the room
+            if self.characters:
+                for character in self.characters.values():
+                    print(f"\n        - {character.name} : {character.description}\n")
+            else:
+                print("Il n'y a person ici.")

@@ -82,9 +82,32 @@ class Actions:
         player.move(valid_direction)
         print(player.current_room.get_long_description())
         print("\n" + player.get_history())
-        return True
-        return False
+         # Vérifier si le joueur est dans la pièce de sortie
+        if player.current_room.name == "Exit":
+            Actions.present_riddle(game)
+            return True
 
+    def present_riddle(game):
+        print("\nVous êtes face à la sortie.\n \n Il ne manquais plus que ça, une énigme. Il faut vite la ressoudre.")
+        print("Une enigme apparait devant vous :")
+        print("Je meurs chaque nuit pour renaître à l'aube. Qui suis-je ?")
+
+        chances = 2
+        while chances > 0:
+            answer = input("Votre réponse : ").lower()
+            if answer in ["l'espoir"]:
+                print("\nBravo!Vous ètés sortie de la maison et avez prie la voiture\n \n ENFIN HORS DE CETTE FORET !!!\n")
+                game.finished = True
+                return
+            else:
+                chances -= 1
+                if chances > 0:
+                    print(f"Mauvaise réponse. Il vous reste {chances} chance.\n\n Anthony ce rapproche\n")
+                else:
+                    print("\nOHH MINCE!!!\n\n Anthony vous a r'attrapé.\n\n VOUS ETES MORT")
+                    game.finished = True
+                    return
+            
     def quit(game, list_of_words, number_of_parameters):
         """
         Quit the game.
@@ -248,3 +271,19 @@ class Actions:
             print("Vous avez dans votre inventaire :")
             for item in player.inventory.values():
                 print(f"    - {item.name} : {item.description} ({item.weight})")
+
+    def talk(game, list_of_words, number_of_parameters):
+        if len(list_of_words) != number_of_parameters + 1:
+            print("Erreur dans le nombre de paramètres.")
+            return False
+    
+        character_name = list_of_words[1].lower()
+        current_room = game.player.current_room
+    
+        if character_name in current_room.characters:
+            character = current_room.characters[character_name]
+            print(f"{character.name} dit : {character.get_msg(game)}")
+        else:
+            print(f"Il n'y a pas de personnage nommé {character_name} ici.")
+    
+        return True
