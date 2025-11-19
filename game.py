@@ -30,32 +30,41 @@ class Game:
         
         # Setup rooms
 
-        forest = Room("Forest", " une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
-        self.rooms.append(forest)
-        tower = Room("Tower", " une immense tour en pierre qui s'élève au dessus des nuages.")
-        self.rooms.append(tower)
-        cave = Room("Cave", " une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
-        self.rooms.append(cave)
-        cottage = Room("Cottage", " un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
-        self.rooms.append(cottage)
-        swamp = Room("Swamp", " un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
-        self.rooms.append(swamp)
-        castle = Room("Castle", " un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
-        self.rooms.append(castle)
+        egypt = Room("Égypte antique", " une salle plongée dans la pénombre, décorée de hiéroglyphes dorés et de statues majestueuses de pharaons. Au centre, trône un immense sarcophage de Toutânkhamon, brillamment orné.")
+        self.rooms.append(egypt)
+        jumanji = Room("Jumanji", " une pièce envahie par la jungle, où des tambours lointains résonnent et où la végétation semble bouger toute seule.")
+        self.rooms.append(jumanji)
+        slavery = Room("Esclavage", " une salle silencieuse remplie de chaînes anciennes, de documents historiques et d’objets témoignant d’une époque sombre.")
+        self.rooms.append(slavery)
+        mythology = Room("Mythologie et légendes", " une pièce mystique où des statues de créatures mythiques semblent vous observer dans la pénombre.")
+        self.rooms.append(mythology)
+        astronomy = Room("Astronomie", " un dôme étoilé où des planètes flottent en suspension et où les constellations brillent autour de vous.")
+        self.rooms.append(astronomy)
+        locker_room = Room("Vestiaire du gardien", " un petit local encombré de casiers métalliques, de lampes torches et d’un uniforme posé sur une chaise.")
+        self.rooms.append(locker_room)
+        serial_killer = Room("Serial Killer", " une salle froide et inquiétante, où des preuves criminelles sont exposées derrière des vitrines sous une lumière rougeâtre.")
+        self.rooms.append(serial_killer)
+        lower_hall = Room("Hall inférieur", " un vaste hall aux colonnes imposantes, éclairé par une forte lumière provenant du plafond.")
+        self.rooms.append(lower_hall)
+        upper_hall = Room("Hall supérieur", " un espace ouvert donnant vue sur les étages du musée, avec des balustrades anciennes et des vitrines éclairées.")
+        self.rooms.append(upper_hall)
 
         # Create exits for rooms
 
-        forest.exits = {"N" : cave, "E" : None, "S" : castle, "O" : None}
-        tower.exits = {"N" : cottage, "E" : None, "S" : None, "O" : None}
-        cave.exits = {"N" : None, "E" : cottage, "S" : forest, "O" : None}
-        cottage.exits = {"N" : None, "E" : None, "S" : tower, "O" : cave}
-        swamp.exits = {"N" : tower, "E" : None, "S" : None, "O" : castle}
-        castle.exits = {"N" : forest, "E" : swamp, "S" : None, "O" : None}
+        egypt.exits = {"N" : None, "E" : None, "S" : upper_hall, "O" : None,"U": None,"D": None}
+        jumanji.exits = {"N" : serial_killer, "E" : None, "S" : None, "O" : lower_hall,"U": None,"D": None}
+        slavery.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,"D": None}
+        mythology.exits = {"N" : None, "E" :upper_hall, "S" : None, "O" : None,"U": None,"D": None}
+        astronomy.exits = {"N" : None, "E" : None, "S" : None, "O" : upper_hall,"U": None,"D": None}
+        locker_room.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,"D": None}
+        serial_killer.exits = {"N" : None, "E" : None, "S" : jumanji, "O" : lower_hall,"U": None,"D": None}
+        lower_hall.exits = {"N" : None, "E" : serial_killer, "S" : None, "O" : slavery,"U": upper_hall,"D": None}
+        upper_hall.exits = {"N" : egypt, "E" : astronomy, "S" : None, "O" : mythology,"U": None,"D": lower_hall}
 
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
-        self.player.current_room = swamp
+        self.player.current_room = locker_room
 
     # Play the game
     def play(self):
