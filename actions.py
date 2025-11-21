@@ -155,3 +155,30 @@ class Actions:
             print("\t- " + str(command))
         print()
         return True
+    
+    def back(game, list_of_words, number_of_parameters):
+        """
+        Return the player to the previous room if possible.
+        This command does not take any parameter
+        """
+        if len(list_of_words) != number_of_parameters +1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+    
+        player = game.player
+    
+        if len(player.history) <= 1:
+            print("\nImpossible de revenir en arrière : votre historique de déplacement est vide.\n")
+            return False
+        
+        #on retire de l'historique
+        player.history.pop()
+        #retour normal
+        player.current_room = player.history[-1]
+
+        #Affichage de la description de la salle et de l'historique
+        print(player.current_room.get_long_description())
+        print("\n" + player.get_history())
+        return True
+

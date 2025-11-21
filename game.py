@@ -27,12 +27,14 @@ class Game:
         self.commands["quit"] = quit
         go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O, U, D)", Actions.go, 1)
         self.commands["go"] = go
+        back = Command("back"," : revenir à la pièce précédente",Actions.back,0)
+        self.commands["back"] = back
         
         # Setup rooms
 
         egypt = Room("Égypte antique", " une salle plongée dans la pénombre, décorée de hiéroglyphes dorés et de statues majestueuses de pharaons. Au centre, trône un immense sarcophage de Toutânkhamon, brillamment orné.")
         self.rooms.append(egypt)
-        jumanji = Room("Jumanji", " une pièce envahie par la jungle, où des tambours lointains résonnent et où la végétation semble bouger toute seule.")
+        jumanji = Room("Jumanji", " une salle décorée comme une jungle, avec des lianes artificielles, des plantes exotiques et des tambours diffusés par des haut-parleurs.")
         self.rooms.append(jumanji)
         slavery = Room("Esclavage", " une salle silencieuse remplie de chaînes anciennes, de documents historiques et d’objets témoignant d’une époque sombre.")
         self.rooms.append(slavery)

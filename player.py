@@ -39,10 +39,14 @@ class Player():
         direction = direction.upper()
         if direction in self.current_room.exits:
             next_room = self.current_room.exits[direction]
+
             # Set the current room to the next room.
             if next_room is not None:
                 self.current_room = next_room
-                self.history.append(self.current_room)
+                #On n'ajoute dans l'historique que si la salle suivante est différente
+                if not self.history or self.history[-1] != self.current_room:
+                    self.history.append(next_room)
+
                 return True
             # If the next room is None, print an error message and return False.
             print("\nAucune porte dans cette direction !\n")
