@@ -73,6 +73,8 @@ class Actions:
             return False
         # Move the player in the direction specified by the parameter.
         player.move(valid_direction)
+        print(player.current_room.get_long_description())
+        print("\n" + player.get_history())
         return True
 
     def quit(game, list_of_words, number_of_parameters):
