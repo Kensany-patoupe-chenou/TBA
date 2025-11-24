@@ -171,6 +171,12 @@ class Actions:
             print("\nImpossible de revenir en arrière : votre historique de déplacement est vide.\n")
             return False
         
+        previous_room = player.history[-2]
+        if previous_room.name == "Vestiaire du gardien":
+            player.history.pop(-2)
+            print("Impossible de retourner dans les vestiaires : la porte s'est verrouillée derrière vous.")
+            return False
+        
         #on retire de l'historique
         player.history.pop()
         #retour normal
