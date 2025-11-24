@@ -32,6 +32,7 @@ class Player():
         self.name = name
         self.current_room = None
         self.history = []
+        self.inventory={}
     
     # Define the move method.
     def move(self, direction):
@@ -63,4 +64,18 @@ class Player():
         if self.history:
             history_str += "\n".join(f"     - {room.name}" for room in self.history[:-1])
         return history_str.strip()
+    
+    def get_inventory(self):
+        """
+        Affiche l'inventaire du joueur.
+
+        Returns:
+        None
+        """
+        if len(self.inventory) == 0:
+            print("Il n'y a rien dans votre inventaire.")
+        else:
+            print("Vous avez dans votre inventaire :")
+            for item in self.inventory.values():
+                print(f"    - {item.name} : {item.description} ({item.weight})")
     

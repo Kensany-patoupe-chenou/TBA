@@ -6,6 +6,7 @@ from room import Room
 from player import Player
 from command import Command
 from actions import Actions
+from item import Item
 
 class Game:
 
@@ -66,6 +67,19 @@ class Game:
         lower_hall.exits = {"N" : None, "E" : serial_killer, "S" : None, "O" : slavery,"U": upper_hall,"D": None}
         upper_hall.exits = {"N" : egypt, "E" : astronomy, "S" : None, "O" : mythology,"U": None,"D": lower_hall}
 
+        # Setup items
+
+        exit_key= Item("exit_key", "les clés de la porte de sortie", "1g")
+        self.rooms[6].inventory_items["exit_key"] = exit_key
+        flashlight = Item("flashlight", "une lampe pour tenter de térasser l'obscurité", "70g")
+        self.rooms[1].inventory_items["flashlight"] = flashlight
+        knife = Item("Knife", "un couteau tranchant pour un massacre amusant", "70g")
+        self.rooms[2].inventory_items["Knife"] = knife
+        gun = Item("Gun", "un fusil à pompe prêt à être dégainé à bout portant", "3.5kg")
+        self.rooms[3].inventory_items["Gun"] = gun
+        car_key = Item("car_key", "les clés de la voiture", "1g")
+        self.rooms[8].inventory_items["car_key"] =car_key
+        
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
