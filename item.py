@@ -32,10 +32,3 @@ class Item:
         """
         return f"({self.name},{self.description},{self.weight})"
 
-
-
-gun= Item("Gun","un fusil à pompe prêt à être dégainer à bout portant","3.5kg")
-knife=Item("Knife","un couteau tranchant pour un massacre amusant","70g")
-exit_key=Item("Exit key","des clés! par ici la sortie","1g")
-flashlight=Item("Flashlight","pour tenter de térasser l'obscurité", "70g")
-car_key = Item("Car key", "les clés de la voiture", "1g")
