@@ -181,4 +181,27 @@ class Actions:
         print(player.current_room.get_long_description())
         print("\n" + player.get_history())
         return True
+    
+    def history(game, list_of_words, number_of_parameters):
+        """
+        Display the history of rooms visited by the player.
+
+        Args:
+            game (Game): The game object.
+            list_of_words (list): The list of words in the command.
+            number_of_parameters (int): The number of parameters expected by the command.
+
+        Returns:
+            bool: True if the command was executed successfully, False otherwise.
+        """
+        l = len(list_of_words)
+        # If the number of parameters is incorrect, print an error message and return False.
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+        
+        player = game.player
+        print("\n" + player.get_history())
+        return True
 
