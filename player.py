@@ -67,15 +67,15 @@ class Player():
     
     def get_inventory(self):
         """
-        Affiche l'inventaire du joueur.
+        Affiche l'inventaire de la piece.
 
         Returns:
         None
         """
         if len(self.inventory) == 0:
-            print("Il n'y a rien dans votre inventaire.")
+            print("Votre inventaire est vide.")
         else:
-            print("Vous avez dans votre inventaire :")
+            print("Vous disposez des items suivants :")
             for item in self.inventory.values():
-                print(f"    - {item.name} : {item.description} ({item.weight})")
+                print(f"    - {item.name} : {item.description} ({item.weight} kg)")
     
