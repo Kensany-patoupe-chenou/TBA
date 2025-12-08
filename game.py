@@ -115,6 +115,16 @@ class Game:
         handcuff_key = Item("clé de menottes", "une clé cachée dans une fissure du mur, derrière une photo. Elle porte le numéro 666.", 0.05)
         self.items.append(handcuff_key)
 
+        # Setup room inventory
+
+        egypt.inventory.extend([miniature_sarcophagus, anubis_amulet, ancient_papyrus])
+        jumanji.inventory.extend([tribal_drum, medicinal_plant, jungle_map])
+        slavery.inventory.extend([broken_chain, intimate_journal, resistance_medal])
+        mythology.inventory.extend([hero_sword, magic_mirror, philosophers_stone])
+        astronomy.inventory.extend([ancient_telescope, star_map, celestial_compass])
+        locker_room.inventory.extend([guard_uniform, flashlight, locker_12_key, museum_map])
+        serial_killer.inventory.extend([bloody_knife, killer_journal, handcuff_key])
+
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
