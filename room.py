@@ -39,7 +39,7 @@ class Room:
         self.name = name
         self.description = description
         self.exits = {}
-        self.inventory=[]
+        self.inventory={}
     
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -65,7 +65,7 @@ class Room:
     
     def get_inventory(self):
         """
-        Affiche l'inventaire du joueur.
+        Affiche l'inventaire de la pièce.
 
         Returns:
         None

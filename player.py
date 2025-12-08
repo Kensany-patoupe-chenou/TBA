@@ -67,7 +67,7 @@ class Player():
     
     def get_inventory(self):
         """
-        Affiche l'inventaire de la piece.
+        Affiche l'inventaire du joueur.
 
         Returns:
         None

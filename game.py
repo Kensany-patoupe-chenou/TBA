@@ -33,6 +33,14 @@ class Game:
         self.commands["history"] = history 
         back = Command("back"," : revenir à la pièce précédente",Actions.back,0)
         self.commands["back"] = back
+        look = Command("look", " : affiche les objets présents dans la pièce", Actions.look, 0)
+        self.commands["look"] = look
+        take = Command("take", " : permet de récupérer un objet présent dans la pièce", Actions.take, 1)
+        self.commands["take"] = take
+        drop = Command("drop", " : permet deéposé un objet présent dans la pièce", Actions.drop, 1)
+        self.commands["drop"] = drop
+        check = Command("ckeck", " : permet deéposé un objet présent dans la pièce", Actions.check, 0)
+        self.commands["check"] = check
 
         
         # Setup rooms
@@ -72,58 +80,79 @@ class Game:
 
         guard_uniform = Item("uniforme", "un uniforme usé, posé sur une chaise en bois. Il semble avoir été porté récemment.", 1.5)
         self.items.append(guard_uniform)
-        flashlight = Item("lampe torche", "une lampe torche moderne, posée sur une étagère métallique. Elle fonctionne encore.", 0.3)
+        flashlight = Item("lampe_torche", "une lampe torche moderne, posée sur une étagère métallique. Elle fonctionne encore.", 0.3)
         self.items.append(flashlight)
-        locker_12_key = Item("clé du casier 12", "une clé rouillée, cachée sous l'uniforme. Elle ouvre un casier dans le coin de la pièce.", 0.1)
+        locker_12_key = Item("clé_du_casier_12", "une clé rouillée, cachée sous l'uniforme. Elle ouvre un casier dans le coin de la pièce.", 0.1)
         self.items.append(locker_12_key)
-        museum_map = Item("plan du musée", "un vieux plan du musée, annoté avec des passages secrets.", 0.2)
+        museum_map = Item("plan_du_musée", "un vieux plan du musée, annoté avec des passages secrets.", 0.2)
         self.items.append(museum_map)
-        miniature_sarcophagus = Item("sarcophage miniature", "un petit sarcophage en bois doré, posé sur un autel. Il semble scellé.", 3.0)
+        miniature_sarcophagus = Item("sarcophage_miniature", "un petit sarcophage en bois doré, posé sur un autel. Il semble scellé.", 3.0)
         self.items.append(miniature_sarcophagus)
-        anubis_amulet = Item("amulette d'Anubis", "une amulette en or, suspendue à une chaîne en argent. Elle brille faiblement.", 0.05)
+        anubis_amulet = Item("amulette_d_Anubis", "une amulette en or, suspendue à une chaîne en argent. Elle brille faiblement.", 0.05)
         self.items.append(anubis_amulet)
-        ancient_papyrus = Item("papyrus ancien", "un papyrus contenant des hiéroglyphes, caché sous le sarcophage miniature.", 0.1)
+        ancient_papyrus = Item("papyrus_ancien", "un papyrus contenant des hiéroglyphes, caché sous le sarcophage miniature.", 0.1)
         self.items.append(ancient_papyrus)
-        tribal_drum = Item("tambour tribal", "un tambour en peau de bête, posé contre un arbre. Il émet un son profond quand on le frappe.", 2.0)
+        tribal_drum = Item("tambour_tribal", "un tambour en peau de bête, posé contre un arbre. Il émet un son profond quand on le frappe.", 2.0)
         self.items.append(tribal_drum)
-        medicinal_plant = Item("plante médicinale", "une plante aux feuilles vertes et brillantes, accrochée à une liane.", 0.2)
+        medicinal_plant = Item("plante_médicinale", "une plante aux feuilles vertes et brillantes, accrochée à une liane.", 0.2)
         self.items.append(medicinal_plant )
-        jungle_map = Item("carte de la jungle", "une carte avec un chemin marqué en rouge, menant à une grotte cachée.", 0.1)
+        jungle_map = Item("carte_de_la_jungle", "une carte avec un chemin marqué en rouge, menant à une grotte cachée.", 0.1)
         self.items.append(jungle_map)
-        broken_chain = Item("chaîne brisée", "une chaîne en fer rouillée, brisée en deux. Elle semble avoir été utilisée pour attacher quelqu'un.", 4.0)
+        broken_chain = Item("chaîne_brisée", "une chaîne en fer rouillée, brisée en deux. Elle semble avoir été utilisée pour attacher quelqu'un.", 4.0)
         self.items.append(broken_chain)
-        intimate_journal = Item("journal intime", "un journal usé, ouvert à une page où il est écrit : 'La liberté est une clé que personne ne peut voler.'", 0.5)
+        intimate_journal = Item("journal_intime", "un journal usé, ouvert à une page où il est écrit : 'La liberté est une clé que personne ne peut voler.'", 0.5)
         self.items.append(intimate_journal)
-        resistance_medal = Item("médaille de résistance", "une médaille gravée avec les mots : 'La vérité libère.'", 0.08)
+        resistance_medal = Item("médaille_de_résistance", "une médaille gravée avec les mots : 'La vérité libère.'", 0.08)
         self.items.append(resistance_medal)
-        hero_sword = Item("épée d'un héros", "une épée ancienne, posée sur un piédestal. Elle brille d'une lueur bleutée.", 3.0)
+        hero_sword = Item("épée_d_un_hero", "une épée ancienne, posée sur un piédestal. Elle brille d'une lueur bleutée.", 3.0)
         self.items.append(hero_sword)
-        magic_mirror = Item("miroir magique", "un miroir en argent, reflétant une image floue de la pièce.", 1.0)
+        magic_mirror = Item("miroir_magique", "un miroir en argent, reflétant une image floue de la pièce.", 1.0)
         self.items.append(magic_mirror)
-        philosophers_stone = Item("pierre philosophale", "une pierre qui émet une lumière douce, cachée derrière le miroir.", 0.5)
+        philosophers_stone = Item("pierre_philosophale", "une pierre qui émet une lumière douce, cachée derrière le miroir.", 0.5)
         self.items.append(philosophers_stone)
-        ancient_telescope = Item("télescope ancien", "un télescope en laiton, pointé vers une constellation particulière.", 5.0)
+        ancient_telescope = Item("télescope_ancien", "un télescope en laiton, pointé vers une constellation particulière.", 5.0)
         self.items.append( ancient_telescope)
-        star_map = Item("carte des étoiles", "une carte du ciel nocturne, avec une étoile marquée en rouge.", 0.1)
+        star_map = Item("carte_des étoiles", "une carte du ciel nocturne, avec une étoile marquée en rouge.", 0.1)
         self.items.append(star_map)
-        celestial_compass = Item("boussole céleste", "une boussole qui pointe toujours vers le nord et une étoile spécifique.", 0.3)
+        celestial_compass = Item("boussole_céleste", "une boussole qui pointe toujours vers le nord et une étoile spécifique.", 0.3)
         self.items.append(celestial_compass)
-        bloody_knife = Item("couteau ensanglanté", "un couteau de cuisine, posé sur une table en métal. Il est taché de rouge.", 0.4)
+        bloody_knife = Item("couteau_ensanglanté", "un couteau de cuisine, posé sur une table en métal. Il est taché de rouge.", 0.4)
         self.items.append(bloody_knife)
-        killer_journal = Item("journal du tueur", "un journal ouvert, rempli de notes et de dessins inquiétants.", 0.6)
+        killer_journal = Item("journal_du_tueur", "un journal ouvert, rempli de notes et de dessins inquiétants.", 0.6)
         self.items.append(killer_journal)
-        handcuff_key = Item("clé de menottes", "une clé cachée dans une fissure du mur, derrière une photo. Elle porte le numéro 666.", 0.05)
+        handcuff_key = Item("clé_de_menottes", "une clé cachée dans une fissure du mur, derrière une photo. Elle porte le numéro 666.", 0.05)
         self.items.append(handcuff_key)
 
         # Setup room inventory
 
-        egypt.inventory.extend([miniature_sarcophagus, anubis_amulet, ancient_papyrus])
-        jumanji.inventory.extend([tribal_drum, medicinal_plant, jungle_map])
-        slavery.inventory.extend([broken_chain, intimate_journal, resistance_medal])
-        mythology.inventory.extend([hero_sword, magic_mirror, philosophers_stone])
-        astronomy.inventory.extend([ancient_telescope, star_map, celestial_compass])
-        locker_room.inventory.extend([guard_uniform, flashlight, locker_12_key, museum_map])
-        serial_killer.inventory.extend([bloody_knife, killer_journal, handcuff_key])
+        egypt.inventory[miniature_sarcophagus.name] = miniature_sarcophagus
+        egypt.inventory[anubis_amulet.name] = anubis_amulet
+        egypt.inventory[ancient_papyrus.name] = ancient_papyrus
+
+        jumanji.inventory[tribal_drum.name] = tribal_drum
+        jumanji.inventory[medicinal_plant.name] = medicinal_plant
+        jumanji.inventory[jungle_map.name] = jungle_map
+
+        slavery.inventory[broken_chain.name] = broken_chain
+        slavery.inventory[intimate_journal.name] = intimate_journal
+        slavery.inventory[resistance_medal.name] = resistance_medal
+
+        mythology.inventory[hero_sword.name] = hero_sword
+        mythology.inventory[magic_mirror.name] = magic_mirror
+        mythology.inventory[philosophers_stone.name] = philosophers_stone
+
+        astronomy.inventory[ancient_telescope.name] = ancient_telescope
+        astronomy.inventory[star_map.name] = star_map
+        astronomy.inventory[celestial_compass.name] = celestial_compass
+
+        locker_room.inventory[guard_uniform.name] = guard_uniform
+        locker_room.inventory[flashlight.name] = flashlight
+        locker_room.inventory[locker_12_key.name] = locker_12_key
+        locker_room.inventory[museum_map.name] = museum_map
+
+        serial_killer.inventory[bloody_knife.name] = bloody_knife
+        serial_killer.inventory[killer_journal.name] = killer_journal
+        serial_killer.inventory[handcuff_key.name] = handcuff_key
 
         # Setup player and starting room
 
