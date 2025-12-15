@@ -192,7 +192,14 @@ class Game:
     # Print the welcome message
     def print_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
-        print("Entrez 'help' si vous avez besoin d'aide.")
+        print("Entrez 'help' si vous avez besoin d'aide.\n")
+        print("""Vous vous réveillez en sursaut dans les vestiaires, le cœur battant, le souffle court, la tête lourde et l’esprit embrumé.
+Les souvenirs de votre journée de travail sont fragmentés, comme effacés, engloutis par l’obscurité.
+Le silence du musée est total, presque étouffant.
+En tentant de vous relever, une lumière étincelante jaillit soudain du hall du musée, déchirant l’obscurité et projetant des ombres inquiétantes sur les murs.
+Quelque chose ne tourne pas rond. Le musée n’est plus endormi… il vous observe.
+Avant d’oser sortir, une chose est certaine : vous devez récupérer tous les objets présents dans la pièce.
+""")
         print(self.player.current_room.get_long_description())
     
 
