@@ -9,7 +9,7 @@ class Item:
     Attributs :
         name (str): Le nom de l'objet.
         description (str): Une description détaillée de l'objet.
-        weight (str): Le poids de l'objet, exprimé sous forme de chaîne de caractères.
+        weight (float): Le poids de l'objet, exprimé sous forme de chaîne de caractères.
     """
     def __init__(self,name,description,weight):
         """
@@ -18,11 +18,11 @@ class Item:
         Args:
             name (str): Le nom de l'objet.
             description (str): La description de l'objet.
-            weight (str): Le poids de l'objet.
+            weight (float): Le poids de l'objet.
         """
         self.name= name
         self.description= description
-        self.weight= weight
+        self.weight= float(weight)
     def __str__(self):
         """
         Retourne une chaîne de caractères représentant l'objet.

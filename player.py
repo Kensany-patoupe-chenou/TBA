@@ -8,6 +8,9 @@ class Player():
         Attributs:
             self.name(str): name of player
             current_room(Room): Room objetc
+            self.history :
+            self.inventory :
+            self.max_weight :
 
         Methods :
             move(self, direction): Return True if the move
@@ -33,6 +36,7 @@ class Player():
         self.current_room = None
         self.history = []
         self.inventory={}
+        self.max_weight = 2.5
     
     # Define the move method.
     def move(self, direction):
@@ -78,4 +82,7 @@ class Player():
             print("Vous disposez des items suivants :")
             for item in self.inventory.values():
                 print(f"    - {item.name} : {item.description} ({item.weight} kg)")
+
+    def current_weight(self):
+        return sum(item.weight for item in self.inventory.values())
     

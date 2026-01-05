@@ -266,8 +266,15 @@ class Actions:
 
         #Récupération de l'item
         item = room.inventory[item_name]
+        #Verification du poids de l'item
+        if player.current_weight() + item.weight > player.max_weight :
+            print("Vous ne pouvez pas prendre cet objet : inventaire trop lourd. ")
+            print(f"Poids actuel : {player.current_weight()} / {player.max_weight} kg")
+            return False
+        
         #ajouter l'item à l'inventaire du joueur
         player.inventory[item_name] = item
+
         #Retirer l'item de la pièce
         del room.inventory[item_name]
         print(f"Vous avez pris l'objet : {item.name}")
@@ -341,8 +348,87 @@ class Actions:
             return True
         
         #si non vide, afficher les objets présents dans l'inventaire
+        print(f"Poids actuel de l'inventaire : {player.current_weight()}")
+        print(f"Poids total autorisé : {player.max_weight} kg")
         print("Votre inventaire contient : ")
         for item in player_inventory.values():
             print(f"   - {item.name} : {item.description} ({item.weight}kg)")
         
+        return True
+    
+    def charge(game, list_of_words, number_of_parameters):
+        """
+        Permet de charger l'item beamer contenu dans l'inventaire du joueur.
+
+        Args:
+            game (Game): The game object.
+            list_of_words (list): The list of words in the command.
+            number_of_parameters (int): The number of parameters expected by the command.
+
+        Returns:
+            bool: True if the command was executed successfully, False otherwise.
+        """
+        l = len(list_of_words)
+        # If the number of parameters is incorrect, print an error message and return False.
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+        player = game.player
+
+        player_inventory = game.player.inventory
+
+        # Vérifier que le beamer est dans l'inventaire
+        if "beamer" not in player_inventory:
+            print("Vous devez avoir le beamer dans votre inventaire pour le charger.")
+            return False
+        
+        beamer = player.inventory["beamer"]
+        # Charger le beamer
+        beamer.charge = True
+        beamer.charged_room = player.current_room
+
+        print(f"Le beamer est chargé avec la pièce : {beamer.charged_room.name}.")
+        return True
+    
+    def use(game, list_of_words, number_of_parameters):
+        """
+        Permet d'utiliser l'item beamer contenu dans l'inventaire du joueur.
+
+        Args:
+            game (Game): The game object.
+            list_of_words (list): The list of words in the command.
+            number_of_parameters (int): The number of parameters expected by the command.
+
+        Returns:
+            bool: True if the command was executed successfully, False otherwise.
+        """
+        l = len(list_of_words)
+        # If the number of parameters is incorrect, print an error message and return False.
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+        player = game.player
+
+        player_inventory = game.player.inventory
+
+        # Vérifier que le beamer est dans l'inventaire
+        if "beamer" not in player.inventory:
+            print("Vous n'avez pas le beamer dans votre inventaire.")
+            return False
+
+        beamer = player.inventory["beamer"]
+
+        # Vérifier qu'il est chargé
+        if not beamer.charge:
+            print("Le beamer n'est pas chargé.")
+            return False
+        
+        # Téléportation
+        player.current_room = beamer.charged_room
+        player.history.append(player.current_room)
+
+        print(f" TELEPORTATION ! Vous arrivez dans la pièce {player.current_room.name}.")
+        print(player.current_room.get_long_description())
         return True
