@@ -10,7 +10,8 @@
 # The error message is different depending on the number of parameters expected by the command.
 
 
-# The error message is stored in the MSG0 and MSG1 variables and formatted with the command_word variable, the first word in the command.
+# The error message is stored in the MSG0 and MSG1 variables and formatted with
+# the command_word variable, the first word in the command.
 # The MSG0 variable is used when the command does not take any parameter.
 MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 # The MSG1 variable is used when the command takes 1 parameter.
@@ -44,7 +45,6 @@ class Actions:
         False
 
         """
-        
         player = game.player
         l = len(list_of_words)
         # If the number of parameters is incorrect, print an error message and return False.
@@ -107,7 +107,7 @@ class Actions:
             command_word = list_of_words[0]
             print(MSG0.format(command_word=command_word))
             return False
-        
+
         # Set the finished attribute of the game object to True.
         player = game.player
         msg = f"\nMerci {player.name} d'avoir joué. Au revoir.\n"
@@ -147,15 +147,15 @@ class Actions:
             command_word = list_of_words[0]
             print(MSG0.format(command_word=command_word))
             return False
-        
+
         # Print the list of available commands.
         print("\nVoici les commandes disponibles:")
         for command in game.commands.values():
             print("\t- " + str(command))
         print()
         return True
-    
-    def back(game, list_of_words, number_of_parameters):
+
+    def back(game,list_of_words,number_of_parameters):
         """
         Return the player to the previous room if possible.
         This command does not take any parameter
@@ -164,19 +164,19 @@ class Actions:
             command_word = list_of_words[0]
             print(MSG0.format(command_word=command_word))
             return False
-    
         player = game.player
-    
         if len(player.history) <= 1:
-            print("\nImpossible de revenir en arrière : votre historique de déplacement est vide.\n")
+            print("\nImpossible de revenir en arrière :"
+                  "votre historique de déplacement est vide.\n")
             return False
-        
+
         previous_room = player.history[-2]
         if previous_room.name == "Vestiaire du gardien":
             player.history.pop(-2)
-            print("Impossible de retourner dans les vestiaires : la porte s'est verrouillée derrière vous.")
+            print("Impossible de retourner dans les vestiaires :"
+                  " la porte s'est verrouillée derrière vous.")
             return False
-        
+
         #on retire de l'historique
         player.history.pop()
         #retour normal
@@ -186,7 +186,7 @@ class Actions:
         print(player.current_room.get_long_description())
         print("\n" + player.get_history())
         return True
-    
+
     def history(game, list_of_words, number_of_parameters):
         """
         Display the history of rooms visited by the player.
@@ -205,11 +205,11 @@ class Actions:
             command_word = list_of_words[0]
             print(MSG0.format(command_word=command_word))
             return False
-        
+
         player = game.player
         print("\n" + player.get_history())
         return True
-    
+
 
     def look(game, list_of_words, number_of_parameters):
         """
@@ -235,7 +235,7 @@ class Actions:
         room.get_inventory()
 
         return True
-    
+
     def take(game, list_of_words, number_of_parameters):
         """
         Permet de prendre un objet présent dans la pièce
@@ -309,9 +309,9 @@ class Actions:
         #Retirer l'item de l'inventaire du joueur
         del player.inventory[item_name]
         print(f"Vous avez déposé l'objet : {item.name}")
-        
+
         return True
-    
+
     def check(game, list_of_words, number_of_parameters):
         """
         Permet de voir les item contenu dans l'inventaire du joueur.
@@ -339,10 +339,27 @@ class Actions:
         if len(player_inventory) == 0:
             print("Votre inventaire est vide.")
             return True
-        
+
         #si non vide, afficher les objets présents dans l'inventaire
         print("Votre inventaire contient : ")
         for item in player_inventory.values():
             print(f"   - {item.name} : {item.description} ({item.weight}kg)")
-        
+
         return True
+
+    def talk(game, list_of_words,number_of_parameters):
+        if len(list_of_words) != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG1.format(command_word=command_word))
+            return False
+
+        character_name = list_of_words[1].lower()
+        current_room = game.player.current_room
+
+        if character_name in current_room.characters:
+            character = current_room.characters[character_name]
+            character.get_msg()
+        else:
+            print(f"Il n'y a pas de personnage nommé {character_name} ici.")
+        return True
+
