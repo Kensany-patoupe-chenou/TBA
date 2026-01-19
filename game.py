@@ -43,15 +43,12 @@ class Game:
         self.commands["drop"] = drop
         check = Command("ckeck", " : permet de voir les objets présent dans l'inventaire", Actions.check, 0)
         self.commands["check"] = check
-<<<<<<< HEAD
         talk = Command("talk", " <nom> : parler à un personnage", Actions.talk, 1)
         self.commands["talk"] = talk
-=======
         charge = Command("charge", " : charge le beamer avec la pièce actuelle", Actions.charge, 1)
         self.commands["charge"] = charge
         use = Command("use", " : utilise le beamer pour se téléporter", Actions.use, 1)
         self.commands["use"] = use
->>>>>>> main
 
         
         # Setup rooms
