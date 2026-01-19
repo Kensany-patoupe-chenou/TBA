@@ -40,6 +40,7 @@ class Room:
         self.description = description
         self.exits = {}
         self.inventory={}
+        self.characters = {}
     
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -70,9 +71,20 @@ class Room:
         Returns:
         None
         """
-        if len(self.inventory) == 0:
-            print("Il n'y a rien ici.")
+        
+        if not self.inventory and not self.characters:
+            print("Il n'y a rien n'y personne ici.")
         else:
-            print("La pièce contient :")
-            for item in self.inventory.values():
-                print(f"    - {item.name} : {item.description} ({item.weight} kg)")
+            if  self.inventory:
+                print("On voit :")
+                for item in self.inventory.values():
+                    print(f"    - {item.name} : {item.description} ({item.weight} kg)")
+            else:
+                print("Il n'y aucun objet ici mais il y'a:")
+                
+            if  self.characters:
+                for character in self.characters.values():
+                    print(f"    - {character.name} : {character.description}")
+            else:
+                print("Il n'y a personne ici.")
+                

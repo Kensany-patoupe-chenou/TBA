@@ -1,4 +1,5 @@
 # Description: Game class
+DEBUG = True
 
 # Import modules
 
@@ -7,6 +8,7 @@ from player import Player
 from command import Command
 from actions import Actions
 from item import Item
+from character import Character
 
 class Game:
 
@@ -39,12 +41,17 @@ class Game:
         self.commands["take"] = take
         drop = Command("drop", " : permet deéposé un objet présent dans la pièce", Actions.drop, 1)
         self.commands["drop"] = drop
-        check = Command("ckeck", " : permet deéposé un objet présent dans la pièce", Actions.check, 0)
+        check = Command("ckeck", " : permet de voir les objets présent dans l'inventaire", Actions.check, 0)
         self.commands["check"] = check
+<<<<<<< HEAD
+        talk = Command("talk", " <nom> : parler à un personnage", Actions.talk, 1)
+        self.commands["talk"] = talk
+=======
         charge = Command("charge", " : charge le beamer avec la pièce actuelle", Actions.charge, 1)
         self.commands["charge"] = charge
         use = Command("use", " : utilise le beamer pour se téléporter", Actions.use, 1)
         self.commands["use"] = use
+>>>>>>> main
 
         
         # Setup rooms
@@ -164,6 +171,28 @@ class Game:
         serial_killer.inventory[killer_journal.name] = killer_journal
         serial_killer.inventory[handcuff_key.name] = handcuff_key
 
+
+        
+        # Setup PNJ
+        
+        gripsou = Character("Gripsou", 
+                            "l'Éternel Conservateur", 
+                            lower_hall, ["Je suis Gripsou, ancien conservateur de ce musée.\n"
+                                        "Mon âme est piégée ici depuis que j'ai réveillé une malédiction en 1897.\n" 
+                                        "Si tu veux t'échapper, suis mes conseils et méfie-toi des ombres."],
+                            movement_type="random")
+        lower_hall.characters[gripsou.name] = gripsou
+        print(gripsou)
+        
+        tingen = Character("Tingen",
+                           "Ta compagne née de Gripsou.",
+                           lower_hall,["Salut l'ami, grace a moi tu pourra communiquer avec Gripsou et resoudre \n"
+                                       "toutes les enigmes afin de sortir du musée au plus tôt."],
+                           movement_type="companion")
+        lower_hall.characters[tingen.name] = tingen
+        print(tingen)
+       
+        
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
@@ -172,12 +201,23 @@ class Game:
 
     # Play the game
     def play(self):
+        
         self.setup()
         self.print_welcome()
         # Loop until the game is finished
         while not self.finished:
-            # Get the command from the player
+                        # Get the command from the player
             self.process_command(input("> "))
+                        
+            if self.player.current_room.name != "lower_hall":
+                for room in self.rooms:
+                    for character in list(room.characters.values()):
+                        if character.movement_type == "random":
+                            moved = character.move()
+                            if DEBUG and moved:
+                                print(f"{character.name} s'est déplacé vers la pièce {character.current_room.name}.")    
+                        elif character.movement_type == "companion":
+                            moved = character.move(self.player.current_room)   
         return None
 
     # Process the command entered by the player
@@ -203,16 +243,18 @@ class Game:
     def print_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
         print("Entrez 'help' si vous avez besoin d'aide.\n")
-        print("""Vous vous réveillez en sursaut dans les vestiaires, le cœur battant, le souffle court, la tête lourde et l’esprit embrumé.
-Les souvenirs de votre journée de travail sont fragmentés, comme effacés, engloutis par l’obscurité.
-Le silence du musée est total, presque étouffant.
-En tentant de vous relever, une lumière étincelante jaillit soudain du hall du musée, déchirant l’obscurité et projetant des ombres inquiétantes sur les murs.
-Quelque chose ne tourne pas rond. Le musée n’est plus endormi… il vous observe.
-Avant d’oser sortir, une chose est certaine : vous devez récupérer tous les objets présents dans la pièce.
-""")
+        print("Vous vous réveillez en sursaut dans les vestiaires,\n" 
+                "le cœur battant, le souffle court, la tête lourde et l’esprit embrumé.\n"
+                "Les souvenirs de votre journée de travail sont fragmentés,\n"
+                "comme effacés, engloutis par l’obscurité.\n"
+                "Le silence du musée est total, presque étouffant.\n"
+                "En tentant de vous relever, une lumière étincelante jaillit soudain du\n" 
+                "hall du musée, déchirant l’obscurité et projetant des ombres inquiétantes sur les murs.\n"
+                "Quelque chose ne tourne pas rond. Le musée n’est plus endormi… il vous observe.\n"
+                "Avant d’oser sortir, une chose est certaine : vous devez \n"
+                "récupérer tous les objets présents dans la pièce.")
         print(self.player.current_room.get_long_description())
-    
-
+        
 def main():
     # Create a game object and play the game
     Game().play()
