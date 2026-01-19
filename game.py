@@ -43,8 +43,15 @@ class Game:
         self.commands["drop"] = drop
         check = Command("ckeck", " : permet de voir les objets présent dans l'inventaire", Actions.check, 0)
         self.commands["check"] = check
+<<<<<<< HEAD
         talk = Command("talk", " <nom> : parler à un personnage", Actions.talk, 1)
         self.commands["talk"] = talk
+=======
+        charge = Command("charge", " : charge le beamer avec la pièce actuelle", Actions.charge, 1)
+        self.commands["charge"] = charge
+        use = Command("use", " : utilise le beamer pour se téléporter", Actions.use, 1)
+        self.commands["use"] = use
+>>>>>>> main
 
         
         # Setup rooms
@@ -126,6 +133,11 @@ class Game:
         self.items.append(killer_journal)
         handcuff_key = Item("clé_de_menottes", "une clé cachée dans une fissure du mur, derrière une photo. Elle porte le numéro 666.", 0.05)
         self.items.append(handcuff_key)
+        beamer = Item("beamer","Un objet mystérieux capable de vous téléporter.", 0.05)
+        self.items.append(beamer)
+        beamer.charge = False
+        beamer.charged_room = None
+
 
         # Setup room inventory
 
@@ -140,6 +152,7 @@ class Game:
         slavery.inventory[broken_chain.name] = broken_chain
         slavery.inventory[intimate_journal.name] = intimate_journal
         slavery.inventory[resistance_medal.name] = resistance_medal
+        slavery.inventory[beamer.name] = beamer
 
         mythology.inventory[hero_sword.name] = hero_sword
         mythology.inventory[magic_mirror.name] = magic_mirror
