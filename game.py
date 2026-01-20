@@ -195,11 +195,15 @@ class Game:
         exploration_quest = Quest(
             title="Grand Explorateur",
             description="Explorez tous les lieux de ce monde mystérieux.",
-            objectives=["Visiter Forest"
-                        , "Visiter Tower"
-                        , "Visiter Cave"
-                        , "Visiter Cottage"
-                        , "Visiter Castle"],
+            objectives=["Visiter Égypte antique"
+                        , "Visiter Mythologie et légendes"
+                        , "Visiter Jumanji"
+                        , "Visiter Esclavage"
+                        , "Visiter Astronomie"
+                        , "Visiter Vestiaire du gardien"
+                        , "Visiter Serial Killer"
+                        , "Visiter Hall inférieur"
+                        , "Visiter Hall supérieur"],
             reward="Titre de Grand Explorateur"
         )
 
