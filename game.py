@@ -194,39 +194,29 @@ class Game:
             """Initialize all quests."""
         exploration_quest = Quest(
             title="Grand Explorateur",
-            description="Explorez tous les lieux de ce monde mystérieux.",
-            objectives=["Visiter Égypte antique"
-                        , "Visiter Mythologie et légendes"
-                        , "Visiter Jumanji"
-                        , "Visiter Esclavage"
-                        , "Visiter Astronomie"
-                        , "Visiter Vestiaire du gardien"
-                        , "Visiter Serial Killer"
-                        , "Visiter Hall inférieur"
-                        , "Visiter Hall supérieur"],
+            description="Explorez le musé jusqu'à atteindre la salle où les étoiles racontent le temps.",
+            objectives=[ "Visiter Astronomie"],
             reward="Titre de Grand Explorateur"
         )
 
-        travel_quest = Quest(
-            title="Grand Voyageur",
-            description="Déplacez-vous 10 fois entre les lieux.",
-            objectives=["Se déplacer 10 fois"],
-            reward="Bottes de voyageur"
+        find_quest = Quest(
+            title="Trouvaille ancestrale",
+            description="Récupérez la pierre philosophale dans le panthéon des dieux et des héros.",
+            objectives=["Prendre l'item amulet d'anubis dans la salle Mythologie et légendes"],
+            reward="Petite augmentation de l'espérance de vie"
         )
 
-        discovery_quest = Quest(
-            title="Découvreur de Secrets",
-            description="Découvrez les trois lieux les plus mystérieux.",
-            objectives=["Visiter Cave"
-                        , "Visiter Tower"
-                        , "Visiter Castle"],
-            reward="Clé dorée"
+        awareness_quest = Quest(
+            title="Avide de savoir",
+            description="Communiquez avec Tingen.",
+            objectives=["Interagissez avec Tingen"],
+            reward="Augmentation du QI"
         )
 
         # Add quests to player's quest manager
         self.player.quest_manager.add_quest(exploration_quest)
-        self.player.quest_manager.add_quest(travel_quest)
-        self.player.quest_manager.add_quest(discovery_quest)
+        self.player.quest_manager.add_quest(find_quest)
+        self.player.quest_manager.add_quest(awareness_quest)
 
         # Setup player and starting room
 
