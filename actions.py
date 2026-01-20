@@ -449,7 +449,7 @@ class Actions:
         player.current_room = beamer.charged_room
         player.history.append(player.current_room)
 
-        print(f" TELEPORTATION ! Vous arrivez dans la pièce {player.current_room.name}.")
+        print(f"🌀TELEPORTATION🌀! Vous arrivez dans la pièce {player.current_room.name}.")
         print(player.current_room.get_long_description())
         return True
     
