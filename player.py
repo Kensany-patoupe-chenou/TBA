@@ -38,6 +38,8 @@ class Player():
         self.history = []
         self.inventory={}
         self.max_weight = 2.5
+        self.quest_manager = QuestManager()
+        self.rewards = []
     
     # Define the move method.
     def move(self, direction):

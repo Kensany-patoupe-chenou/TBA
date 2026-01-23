@@ -174,22 +174,33 @@ class Game:
         # Setup PNJ
         
         gripsou = Character("Gripsou", 
-                            "l'Éternel Conservateur", 
+                            "le spectre du musée, gardien des œuvres et des souvenirs.", 
                             lower_hall, ["Je suis Gripsou, ancien conservateur de ce musée.\n"
-                                        "Mon âme est piégée ici depuis que j'ai réveillé une malédiction en 1897.\n" 
-                                        "Si tu veux t'échapper, suis mes conseils et méfie-toi des ombres."],
+                                        "Quand l’au-delà m’a appelé, j’ai détourné le regard,\n"
+                                        "incapable d’abandonner ce lieu que j’aimais tant,\n"
+                                        "et auquel j’ai dédié ma vie.\n"
+                                        "Depuis, mon âme y demeure."],
                             movement_type="random")
         lower_hall.characters[gripsou.name] = gripsou
         print(gripsou)
         
         tingen = Character("Tingen",
-                           "Ta compagne née de Gripsou.",
-                           lower_hall,["Salut l'ami, grace a moi tu pourra communiquer avec Gripsou et resoudre \n"
-                                       "toutes les enigmes afin de sortir du musée au plus tôt."],
+                           "l’alter ego créé par Gripsou, né de son amour profond pour le musée.",
+                           lower_hall,["Salut, voyageur… \n"
+                                       "C’est à travers ma voix que tu pourras entendre la sienne,"
+                                       "et à travers moi que ses secrets te seront révélés.."],
                            movement_type="companion")
         lower_hall.characters[tingen.name] = tingen
         print(tingen)
        
+
+
+        # Setup player and starting room
+
+        self.player = Player(input("\nEntrez votre nom: "))
+        self.player.current_room = locker_room
+        self.player.history.append(locker_room)
+
         def _setup_quests(self):
             """Initialize all quests."""
         exploration_quest = Quest(
@@ -213,16 +224,11 @@ class Game:
             reward="Augmentation du QI"
         )
 
+
         # Add quests to player's quest manager
         self.player.quest_manager.add_quest(exploration_quest)
         self.player.quest_manager.add_quest(find_quest)
         self.player.quest_manager.add_quest(awareness_quest)
-
-        # Setup player and starting room
-
-        self.player = Player(input("\nEntrez votre nom: "))
-        self.player.current_room = locker_room
-        self.player.history.append(locker_room)
 
     # Play the game
     def play(self):
@@ -276,8 +282,8 @@ class Game:
                 "En tentant de vous relever, une lumière étincelante jaillit soudain du\n" 
                 "hall du musée, déchirant l’obscurité et projetant des ombres inquiétantes sur les murs.\n"
                 "Quelque chose ne tourne pas rond. Le musée n’est plus endormi… il vous observe.\n"
-                "Avant d’oser sortir, une chose est certaine : vous devez \n"
-                "récupérer tous les objets présents dans la pièce.")
+                "Avant d’oser sortir, une chose est certaine : \n"
+                "Vous devez vous armer de courage.")
         print(self.player.current_room.get_long_description())
         
 def main():
