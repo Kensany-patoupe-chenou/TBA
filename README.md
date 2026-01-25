@@ -118,6 +118,157 @@ Pour réussir et sortir du musée d'ici l’aube, le joueur doit donc gérer ses
 ## Guide développeur
 Cette partie du rapport traite de la conception et de la structure du jeu. Elle détaille l’architecture du projet, l’organisation des classes et leurs relations, notamment à travers un diagramme de classes.
 
+classDiagram
+    %% Classes principales
+    class Game {
+        -finished: bool
+        -rooms: list[Room]
+        -commands: dict[str, Command]
+        -player: Player
+        -items: list[Item]
+        -next_turn: bool
+        +__init__()
+        +setup()
+        +play()
+        +process_command(command_string)
+        +print_welcome()
+        +win()
+        +loose()
+    }
+
+    class Room {
+        -name: str
+        -description: str
+        -exits: dict[str, Room]
+        -inventory: dict[str, Item]
+        -characters: dict[str, Character]
+        +__init__(name: str, description: str)
+        +get_exit(direction: str)
+        +get_exit_string()
+        +get_long_description()
+        +get_inventory()
+    }
+
+    class Player {
+        -name: str
+        -current_room: Room
+        -history: list[Room]
+        -inventory: dict[str, Item]
+        -max_weight: float
+        -quest_manager: QuestManager
+        -rewards: list[str]
+        -move_count: int
+        +__init__(name: str)
+        +move(direction: str)
+        +get_history()
+        +get_inventory()
+        +current_weight()
+        +add_reward(reward: str)
+        +show_rewards()
+    }
+
+    class Character {
+        <<abstract>>
+        -name: str
+        -description: str
+        -current_room: Room
+        -msgs: list[str]
+        -msg_index: int
+        -movement_type: str
+        +__init__(name: str, description: str, current_room: Room, msgs: list[str], movement_type: str)
+        +__str__()
+        +get_msg(current_room: Room)
+        +move(player_current_room: Room)
+    }
+
+    class RandomCharacter {
+        +move()
+    }
+
+    class CompanionCharacter {
+        +move(player_current_room: Room)
+    }
+
+    class Item {
+        -name: str
+        -description: str
+        -weight: float
+        -charge: bool
+        -charged_room: Room
+        +__init__(name: str, description: str, weight: float)
+        +__str__()
+    }
+
+    class Command {
+        -command_word: str
+        -help_string: str
+        -action: function
+        -number_of_parameters: int
+        +__init__(command_word: str, help_string: str, action: function, number_of_parameters: int)
+        +__str__()
+    }
+
+    class Quest {
+        -title: str
+        -description: str
+        -objectives: list[str]
+        -reward: str
+        -is_completed: bool
+        -is_active: bool
+        +__init__(title: str, description: str, objectives: list[str], reward: str)
+        +activate()
+        +complete_objective(objective: str, player: Player)
+        +complete_quest(player: Player)
+        +get_status()
+        +get_details(current_counts: dict)
+        +check_room_objective(room_name: str, player: Player)
+        +check_action_objective(action: str, target: str, player: Player)
+        +check_counter_objective(counter_name: str, current_count: int, player: Player)
+        +check_item_objective(item_name: str, player: Player)
+    }
+
+    class QuestManager {
+        -quests: list[Quest]
+        -active_quests: list[Quest]
+        -player: Player
+        +__init__(player: Player)
+        +add_quest(quest: Quest)
+        +activate_quest(quest_title: str)
+        +complete_objective(objective_text: str)
+        +check_room_objectives(room_name: str)
+        +check_action_objectives(action: str, target: str)
+        +check_counter_objectives(counter_name: str, current_count: int)
+        +check_item_objectives(item_name: str)
+        +get_active_quests()
+        +get_all_quests()
+        +get_quest_by_title(title: str)
+        +show_quests()
+        +show_quest_details(quest_title: str, current_counts: dict)
+    }
+
+    %% Relations
+    Game "1" *-- "1" Player : contient
+    Game "1" *-- "*" Room : contient
+    Game "1" *-- "*" Command : utilise
+    Game "1" *-- "*" Item : gère
+    Room "1" *-- "*" Item : contient
+    Room "1" *-- "*" Character : contient
+    Player "1" -- "1" Room : se trouve dans
+    Player "1" *-- "*" Item : transporte
+    Player "1" *-- "1" QuestManager : gère
+    Character <|-- RandomCharacter : héritage
+    Character <|-- CompanionCharacter : héritage
+    QuestManager "1" *-- "*" Quest : gère
+
+    %% Notes
+    note for Character "Classe de base pour tous les PNJ. Les sous-classes redéfinissent la méthode `move()`."
+    note for Game "Classe principale du jeu. Gère les pièces, les commandes, le joueur et les objets."
+    note for Room "Représente une pièce du musée. Contient des sorties, des objets et des PNJ."
+    note for QuestManager "Gère les quêtes du joueur et vérifie les objectifs."
+    note for Item "Représente un objet que le joueur peut ramasser ou déposer. Peut être chargé (ex: beamer)."
+    note for Player "Représente le joueur. Peut se déplacer, transporter des objets et interagir avec les PNJ."
+
+
 ### Diagramme de classes
 Le diagramme de classes ci-dessous présente la structure du jeu et les relations entre les différentes classes qui le composent. Il permet de visualiser l’organisation générale du projet et les interactions entre ses principaux éléments.
 
