@@ -9,6 +9,7 @@ Cette partie du rapport présente le jeu du point de vue de l’utilisateur. Ell
 ### Installation du jeu
 
 ### Description du jeu
+mettre une phrase introductrice
 
 #### Synopsys
 
