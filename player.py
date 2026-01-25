@@ -1,3 +1,15 @@
+"""
+Ce module contient la classe Player, qui représente le joueur dans le jeu.
+
+La classe Player gère les éléments suivants :
+- Le nom du joueur.
+- La pièce actuelle du joueur.
+- L'historique des pièces visitées par le joueur.
+- L'inventaire des objets du joueur.
+
+La classe permet au joueur de se déplacer, de consulter son historique,
+ de gérer son inventaire, etc.
+"""
 # Define the Player class.
 from quest import QuestManager
 class Player():
@@ -42,7 +54,7 @@ class Player():
         self.rewards = []
         self.move_count = 0
 
-    
+
     # Define the move method.
     def move(self, direction):
         """
@@ -102,7 +114,7 @@ class Player():
                 # Increment move counter and check movement objectives
                 self.move_count += 1
                 self.quest_manager.check_counter_objectives("Se déplacer", self.move_count)
-                
+
                 # Check room visit objectives
                 self.quest_manager.check_room_objectives(self.current_room.name)
 
@@ -113,7 +125,7 @@ class Player():
 
         print("\nDirection invalide.\n")
         return False
-        
+
 
     #Define the get_history method
     def get_history(self):
@@ -127,7 +139,7 @@ class Player():
         if self.history:
             history_str += "\n".join(f"     - {room.name}" for room in self.history[:-1])
         return history_str.strip()
-    
+
     def get_inventory(self):
         """
         Affiche l'inventaire du joueur.
@@ -143,8 +155,14 @@ class Player():
                 print(f"    - {item.name} : {item.description} ({item.weight} kg)")
 
     def current_weight(self):
+        """
+        Retourne le poids actuel de l'inventaire du joueur.
+
+        Returns:
+            float: Le poids actuel de l'inventaire.
+        """
         return sum(item.weight for item in self.inventory.values())
-    
+
     def add_reward(self, reward):
         """
         Add a reward to the player's rewards list.
@@ -198,4 +216,3 @@ class Player():
             for reward in self.rewards:
                 print(f"  • {reward}")
             print()
-    

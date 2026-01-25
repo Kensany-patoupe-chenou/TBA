@@ -45,7 +45,7 @@ class Character:
         return f"{self.name}:{self.description}"
 
 
-    def get_msg(self):
+    def get_msg(self,current_room):
 
         """Retourne le message actuel du personnage."""
         if not self.msgs:
