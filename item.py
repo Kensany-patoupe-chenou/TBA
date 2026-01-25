@@ -1,4 +1,5 @@
 """Module contenant la classe Item pour représenter les objets du jeu."""
+# pylint: disable=too-few-public-methods
 class Item:
     """
     Représente un objet dans le jeu.
@@ -31,4 +32,3 @@ class Item:
             str: Une représentation de l'objet au format "(nom, description, poids)".
         """
         return f"({self.name},{self.description},{self.weight})"
-

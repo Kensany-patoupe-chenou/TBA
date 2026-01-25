@@ -1,5 +1,5 @@
+"""Partie principale du jeux"""
 # Description: Game class
-DEBUG = True
 
 # Import modules
 
@@ -11,39 +11,60 @@ from item import Item
 from character import Character
 from quest import Quest
 
-class Game:
+DEBUG = True
 
+class Game:
+    """
+    Classe principale du jeu Fantaseum.
+
+    Cette classe gère l'initialisation du jeu, les pièces, les commandes,
+    le joueur, les objets,
+    et les interactions entre ces éléments.
+    """
     # Constructor
     def __init__(self):
+        """
+        Constructeur de la classe Game.
+
+        Initialise les attributs de base du jeu.
+        """
         self.finished = False
         self.rooms = []
         self.commands = {}
         self.player = None
         self.items = []
         self.next_turn=False
-    
+
     # Setup the game
     def setup(self):
-
+        """
+        Initialise les éléments du jeu : commandes, pièces, objets,
+        personnages, et joueur.
+        """
         # Setup commands
 
         help = Command("help", " : afficher cette aide", Actions.help, 0)
         self.commands["help"] = help
         quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
         self.commands["quit"] = quit
-        go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O, U, D)", Actions.go, 1)
+        go = Command("go", " <direction> : se déplacer dans"
+                    "une direction cardinale (N, E, S, O, U, D)", Actions.go, 1)
         self.commands["go"] = go
-        history = Command("history", " : afficher l'historique des pièces visitées", Actions.history, 0)
-        self.commands["history"] = history 
+        history = Command("history", " : afficher l'historique "
+                          "des pièces visitées", Actions.history, 0)
+        self.commands["history"] = history
         back = Command("back"," : revenir à la pièce précédente",Actions.back,0)
         self.commands["back"] = back
         look = Command("look", " : affiche les objets présents dans la pièce", Actions.look, 0)
         self.commands["look"] = look
-        take = Command("take", " : permet de récupérer un objet présent dans la pièce", Actions.take, 1)
+        take = Command("take", " : permet de récupérer un objet "
+                       "présent dans la pièce", Actions.take, 1)
         self.commands["take"] = take
-        drop = Command("drop", " : permet deéposé un objet présent dans la pièce", Actions.drop, 1)
+        drop = Command("drop", " : permet deéposé un objet "
+                       "présent dans la pièce", Actions.drop, 1)
         self.commands["drop"] = drop
-        check = Command("ckeck", " : permet de voir les objets présent dans l'inventaire", Actions.check, 0)
+        check = Command("ckeck", " : permet de voir les objets "
+                        "présent dans l'inventaire", Actions.check, 0)
         self.commands["check"] = check
         talk = Command("talk", " <nom> : un personnage vous parle", Actions.talk, 1)
         self.commands["talk"] = talk
@@ -53,92 +74,138 @@ class Game:
         self.commands["use"] = use
         quest = Command("quest", " : voir les détails à propos d'une quête", Actions.quest, 1)
         self.commands["quest"] = quest
-        activate = Command("activate", " : permet d'activer une quête spécifique", Actions.activate, 1)
+        activate = Command("activate", " : permet d'activer une "
+                           "quête spécifique", Actions.activate, 1)
         self.commands["activate"] = activate
-        rewards = Command("rewards", " : permet de voir toutes les récompenses gagnées par le joueur", Actions.rewards, 0)
+        rewards = Command("rewards", " : permet de voir toutes les "
+                          "récompenses gagnées par le joueur", Actions.rewards, 0)
         self.commands["rewards"] = rewards
         quests = Command("quests", " : permet de lister les quêtes", Actions.quests, 0)
         self.commands["quests"] = quests
 
-        
+
         # Setup rooms
 
-        egypt = Room("Égypte antique", " une salle plongée dans la pénombre, décorée de hiéroglyphes dorés et de statues majestueuses de pharaons. Au centre, trône un immense sarcophage de Toutânkhamon, brillamment orné.")
+        egypt = Room("Égypte antique", " une salle plongée dans la pénombre, "
+                     "décorée de hiéroglyphes dorés et de statues majestueuses de pharaons. "
+                     "Au centre, trône un immense sarcophage de Toutânkhamon, brillamment orné.")
         self.rooms.append(egypt)
-        jumanji = Room("Jumanji", " une salle décorée comme une jungle, avec des lianes artificielles, des plantes exotiques et des tambours diffusés par des haut-parleurs.")
+        jumanji = Room("Jumanji", " une salle décorée comme une jungle, "
+                       "avec des lianes artificielles,des plantes exotiques et "
+                       "des tambours diffusés par des haut-parleurs.")
         self.rooms.append(jumanji)
-        slavery = Room("Esclavage", " une salle silencieuse remplie de chaînes anciennes, de documents historiques et d’objets témoignant d’une époque sombre.")
+        slavery = Room("Esclavage", " une salle silencieuse remplie de chaînes "
+                       "anciennes,de documents historiques et d’objets témoignant"
+                       " d’une époque sombre.")
         self.rooms.append(slavery)
-        mythology = Room("Mythologie et légendes", " une pièce mystique où des statues de créatures mythiques semblent vous observer dans la pénombre.")
+        mythology = Room("Mythologie et légendes", " une pièce mystique où des statues"
+                         " de créatures mythiques semblent vous observer dans la pénombre.")
         self.rooms.append(mythology)
-        astronomy = Room("Astronomie", " un dôme étoilé où des planètes flottent en suspension et où les constellations brillent autour de vous.")
+        astronomy = Room("Astronomie", " un dôme étoilé où des planètes flottent en suspension "
+                         "et où les constellations brillent autour de vous.")
         self.rooms.append(astronomy)
-        locker_room = Room("Vestiaire du gardien", " un petit local encombré de casiers métalliques, de lampes torches et d’un uniforme posé sur une chaise.")
+        locker_room = Room("Vestiaire du gardien", " un petit local encombré de casiers"
+                           " métalliques, de lampes torches et d’un uniforme posé sur une chaise.")
         self.rooms.append(locker_room)
-        serial_killer = Room("Serial Killer", " une salle froide et inquiétante, où des preuves criminelles sont exposées derrière des vitrines sous une lumière rougeâtre.")
+        serial_killer = Room("Serial Killer", " une salle froide et inquiétante, "
+                             "où des preuves criminelles sont exposées derrière des "
+                             "vitrines sous une lumière rougeâtre.")
         self.rooms.append(serial_killer)
-        lower_hall = Room("Hall inférieur", " un vaste hall aux colonnes imposantes, éclairé par une forte lumière provenant du plafond.")
+        lower_hall = Room("Hall inférieur", " un vaste hall aux colonnes imposantes, "
+                          "éclairé par une forte lumière provenant du plafond.")
         self.rooms.append(lower_hall)
-        upper_hall = Room("Hall supérieur", " un espace ouvert donnant vue sur les étages du musée, avec des balustrades anciennes et des vitrines éclairées.")
+        upper_hall = Room("Hall supérieur", " un espace ouvert donnant vue sur les étages du musée,"
+                          " avec des balustrades anciennes et des vitrines éclairées.")
         self.rooms.append(upper_hall)
 
         # Create exits for rooms
 
         egypt.exits = {"N" : None, "E" : None, "S" : upper_hall, "O" : None,"U": None,"D": None}
-        jumanji.exits = {"N" : None, "E" : None, "S" : serial_killer, "O" : lower_hall,"U": None,"D": None}
-        slavery.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,"D": None}
-        mythology.exits = {"N" : None, "E" :upper_hall, "S" : None, "O" : None,"U": None,"D": None}
-        astronomy.exits = {"N" : None, "E" : None, "S" : None, "O" : upper_hall,"U": None,"D": None}
-        locker_room.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,"D": None}
-        serial_killer.exits = {"N" : jumanji, "E" : None, "S" : None, "O" : lower_hall,"U": None,"D": None}
-        lower_hall.exits = {"N" : None, "E" : jumanji, "S" : None, "O" : slavery,"U": upper_hall,"D": None}
-        upper_hall.exits = {"N" : egypt, "E" : astronomy, "S" : None, "O" : mythology,"U": None,"D": lower_hall}
+        jumanji.exits = {"N" : serial_killer, "E" : None, "S" : None, "O" : lower_hall,"U": None,
+                         "D": None}
+        slavery.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,
+                         "D": None}
+        mythology.exits = {"N" : None, "E" :upper_hall, "S" : None, "O" : None,"U": None,
+                           "D": None}
+        astronomy.exits = {"N" : None, "E" : None, "S" : None, "O" : upper_hall,"U": None,
+                           "D": None}
+        locker_room.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,
+                             "D": None}
+        serial_killer.exits = {"N" : None, "E" : None, "S" : jumanji, "O" : lower_hall,"U": None,
+                               "D": None}
+        lower_hall.exits = {"N" : None, "E" : jumanji, "S" : None, "O" : slavery,"U": upper_hall,
+                            "D": None}
+        upper_hall.exits = {"N" : egypt, "E" : astronomy, "S" : None, "O" : mythology,"U": None,
+                            "D": lower_hall}
 
         # Setup items
 
-        guard_uniform = Item("uniforme", "un uniforme usé, posé sur une chaise en bois. Il semble avoir été porté récemment.", 1.5)
+        guard_uniform = Item("uniforme", "un uniforme usé, posé sur une chaise en bois."
+                             " Il semble avoir été porté récemment.", 1.5)
         self.items.append(guard_uniform)
-        flashlight = Item("lampe_torche", "une lampe torche moderne, posée sur une étagère métallique. Elle fonctionne encore.", 0.3)
+        flashlight = Item("lampe_torche", "une lampe torche moderne, posée sur une "
+                          "étagère métallique. Elle fonctionne encore.", 0.3)
         self.items.append(flashlight)
-        locker_12_key = Item("clé_du_casier_12", "une clé rouillée, cachée sous l'uniforme. Elle ouvre un casier dans le coin de la pièce.", 0.1)
+        locker_12_key = Item("clé_du_casier_12", "une clé rouillée, cachée sous "
+                             "l'uniforme. Elle ouvre un casier dans le coin de la pièce.", 0.1)
         self.items.append(locker_12_key)
-        museum_map = Item("plan_du_musée", "un vieux plan du musée, annoté avec des passages secrets.", 0.2)
+        museum_map = Item("plan_du_musée", "un vieux plan du musée, "
+                          "annoté avec des passages secrets.", 0.2)
         self.items.append(museum_map)
-        miniature_sarcophagus = Item("sarcophage_miniature", "un petit sarcophage en bois doré, posé sur un autel. Il semble scellé.", 3.0)
+        miniature_sarcophagus = Item("sarcophage_miniature", "un petit sarcophage en bois "
+                                     "doré, posé sur un autel. Il semble scellé.", 3.0)
         self.items.append(miniature_sarcophagus)
-        anubis_amulet = Item("amulette_d_Anubis", "une amulette en or, suspendue à une chaîne en argent. Elle brille faiblement.", 0.05)
+        anubis_amulet = Item("amulette_d_Anubis", "une amulette en or, suspendue à une "
+                             "chaîne en argent. Elle brille faiblement.", 0.05)
         self.items.append(anubis_amulet)
-        ancient_papyrus = Item("papyrus_ancien", "un papyrus contenant des hiéroglyphes, caché sous le sarcophage miniature.", 0.1)
+        ancient_papyrus = Item("papyrus_ancien", "un papyrus contenant des hiéroglyphes, "
+                               "caché sous le sarcophage miniature.", 0.1)
         self.items.append(ancient_papyrus)
-        tribal_drum = Item("tambour_tribal", "un tambour en peau de bête, posé contre un arbre. Il émet un son profond quand on le frappe.", 2.0)
+        tribal_drum = Item("tambour_tribal", "un tambour en peau de bête, posé contre "
+                           "un arbre. Il émet un son profond quand on le frappe.", 2.0)
         self.items.append(tribal_drum)
-        medicinal_plant = Item("plante_médicinale", "une plante aux feuilles vertes et brillantes, accrochée à une liane.", 0.2)
+        medicinal_plant = Item("plante_médicinale", "une plante aux feuilles vertes et "
+                               "brillantes, accrochée à une liane.", 0.2)
         self.items.append(medicinal_plant )
-        jungle_map = Item("carte_de_la_jungle", "une carte avec un chemin marqué en rouge, menant à une grotte cachée.", 0.1)
+        jungle_map = Item("carte_de_la_jungle", "une carte avec un chemin marqué en "
+                          "rouge, menant à une grotte cachée.", 0.1)
         self.items.append(jungle_map)
-        broken_chain = Item("chaîne_brisée", "une chaîne en fer rouillée, brisée en deux. Elle semble avoir été utilisée pour attacher quelqu'un.", 4.0)
+        broken_chain = Item("chaîne_brisée", "une chaîne en fer rouillée, brisée en deux."
+                            " Elle semble avoir été utilisée pour attacher quelqu'un.", 4.0)
         self.items.append(broken_chain)
-        intimate_journal = Item("journal_intime", "un journal usé, ouvert à une page où il est écrit : 'La liberté est une clé que personne ne peut voler.'", 0.5)
+        intimate_journal = Item("journal_intime", "un journal usé, ouvert à une page où il "
+                                "est écrit : 'La liberté est une clé que personne ne peut "
+                                "voler.'", 0.5)
         self.items.append(intimate_journal)
-        resistance_medal = Item("médaille_de_résistance", "une médaille gravée avec les mots : 'La vérité libère.'", 0.08)
+        resistance_medal = Item("médaille_de_résistance", "une médaille gravée avec les mots "
+                                ": 'La vérité libère.'", 0.08)
         self.items.append(resistance_medal)
-        hero_sword = Item("épée_d_un_hero", "une épée ancienne, posée sur un piédestal. Elle brille d'une lueur bleutée.", 3.0)
+        hero_sword = Item("épée_d_un_hero", "une épée ancienne, posée sur un piédestal."
+                          " Elle brille d'une lueur bleutée.", 3.0)
         self.items.append(hero_sword)
-        magic_mirror = Item("miroir_magique", "un miroir en argent, reflétant une image floue de la pièce.", 1.0)
+        magic_mirror = Item("miroir_magique", "un miroir en argent, reflétant une image"
+                            " floue de la pièce.", 1.0)
         self.items.append(magic_mirror)
-        philosophers_stone = Item("pierre_philosophale", "une pierre qui émet une lumière douce, cachée derrière le miroir.", 0.5)
+        philosophers_stone = Item("pierre_philosophale", "une pierre qui émet une "
+                                  "lumière douce, cachée derrière le miroir.", 0.5)
         self.items.append(philosophers_stone)
-        ancient_telescope = Item("télescope_ancien", "un télescope en laiton, pointé vers une constellation particulière.", 5.0)
+        ancient_telescope = Item("télescope_ancien", "un télescope en laiton, pointé "
+                                 "vers une constellation particulière.", 5.0)
         self.items.append( ancient_telescope)
-        star_map = Item("carte_des étoiles", "une carte du ciel nocturne, avec une étoile marquée en rouge.", 0.1)
+        star_map = Item("carte_des étoiles", "une carte du ciel nocturne, avec "
+                        "une étoile marquée en rouge.", 0.1)
         self.items.append(star_map)
-        celestial_compass = Item("boussole_céleste", "une boussole qui pointe toujours vers le nord et une étoile spécifique.", 0.3)
+        celestial_compass = Item("boussole_céleste", "une boussole qui pointe "
+                                 "toujours vers le nord et une étoile spécifique.", 0.3)
         self.items.append(celestial_compass)
-        bloody_knife = Item("couteau_ensanglanté", "un couteau de cuisine, posé sur une table en métal. Il est taché de rouge.", 0.4)
+        bloody_knife = Item("couteau_ensanglanté", "un couteau de cuisine, posé sur une "
+                            "table en métal. Il est taché de rouge.", 0.4)
         self.items.append(bloody_knife)
-        killer_journal = Item("journal_du_tueur", "un journal ouvert, rempli de notes et de dessins inquiétants.", 0.6)
+        killer_journal = Item("journal_du_tueur", "un journal ouvert, rempli de notes et "
+                              "de dessins inquiétants.", 0.6)
         self.items.append(killer_journal)
-        handcuff_key = Item("clé_de_menottes", "une clé cachée dans une fissure du mur, derrière une photo. Elle porte le numéro 666.", 0.05)
+        handcuff_key = Item("clé_de_menottes", "une clé cachée dans une fissure du mur, "
+                            "derrière une photo. Elle porte le numéro 666.", 0.05)
         self.items.append(handcuff_key)
         beamer = Item("beamer","Un objet mystérieux capable de vous téléporter.", 0.05)
         self.items.append(beamer)
@@ -179,10 +246,10 @@ class Game:
         serial_killer.inventory[handcuff_key.name] = handcuff_key
 
 
-        
+
         # Setup PNJ
-        
-        gripsou = Character("Gripsou", 
+
+        gripsou = Character("Gripsou",
                             " le spectre du musée, gardien des œuvres et des souvenirs.", 
                             lower_hall, ["Salut, voyageur… \n"
                                         "Je suis Gripsou, ancien conservateur de ce musée.\n"
@@ -195,19 +262,20 @@ class Game:
         lower_hall.characters["Gripsou"] = gripsou
         gripsou._first_meet = True
         print(gripsou)
-        
+
         tingen = Character("Tingen",
                            " l’alter ego créé par Gripsou, né de son amour profond pour le musée.",
                            lower_hall,["Salut, voyageur… \n"
-                                       "Je suis Tingen, née de l'amour profond de Gripsou pour ces lieux \n"
-                                       "Je te servirai de compagnon dans cette aventure et resterai à tes côtes \n"
-                                       "C’est à travers ma voix que tu pourras entendre la sienne, \n"
+                                       "Je suis Tingen, née de l'amour profond de "
+                                       "Gripsou pour ces lieux \n"
+                                       "Je te servirai de compagnon dans cette aventure "
+                                       "et resterai à tes côtes \n"
+                                       "C’est à travers ma voix que tu pourras entendre "
+                                       "la sienne, \n"
                                        "et à travers moi que ses secrets te seront révélés..\n"],
                            movement_type="companion")
         lower_hall.characters["Tingen"] = tingen
         print(tingen)
-       
-
 
         # Setup player and starting room
 
@@ -219,7 +287,8 @@ class Game:
             """Initialize all quests."""
         exploration_quest = Quest(
             title="Grand Explorateur",
-            description="Explorez le musé jusqu'à atteindre la salle où les étoiles racontent le temps.",
+            description="Explorez le musé jusqu'à atteindre"
+            " la salle où les étoiles racontent le temps.",
             objectives=[ "Visiter Astronomie"],
             reward="Titre de Grand Explorateur"
         )
@@ -246,7 +315,12 @@ class Game:
 
     # Play the game
     def play(self):
-        
+        """
+        Démarre la boucle principale du jeu.
+
+        Cette méthode initialise le jeu, affiche un message de bienvenue,
+        et traite les commandes du joueur jusqu'à ce que le jeu soit terminé.
+        """
         self.setup()
         self.print_welcome()
         self._lower_hall_visited = False
@@ -289,14 +363,14 @@ class Game:
                 self.finished = True
                 print("💥 GAME OVER 💥")
                 break
-            
+
             if self.player.current_room.name == "Hall inférieur" and not self._lower_hall_visited:
                 self._lower_hall_visited = True
                 if "Gripsou" in self.player.current_room.characters:
                     gripsou = self.player.current_room.characters["Gripsou"]
                     print(f"\n{gripsou.name} dit : {gripsou.get_msg(self.player.current_room)}")
-                
-                        
+
+
             if self.next_turn:
                 for room in self.rooms:
                     for character in list(room.characters.values()):
@@ -304,13 +378,15 @@ class Game:
                             if self.player.current_room.name != "Hall inferieur":
                                 moved = character.move()
                                 if DEBUG and moved:
-                                    print(f"{character.name} s'est déplacé vers la pièce {character.current_room.name}.\n")
+                                    print(f"{character.name} s'est déplacé vers "
+                                          "la pièce {character.current_room.name}.\n")
                         elif character.movement_type == "companion":
                             moved = character.move(self.player.current_room)
                             if DEBUG and moved:
-                                print(f"{character.name} vous a suivi dans la pièce {character.current_room.name}.\n")   
+                                print(f"{character.name} vous a suivi dans "
+                                      "la pièce {character.current_room.name}.\n")
         return None
-        
+
     def win(self):
         """
         Vérifie si le joueur a gagné la partie.
@@ -326,8 +402,10 @@ class Game:
         current_room = self.player.current_room
         inventory = self.player.inventory
 
-        if current_room.name == "Serial Killer" and "plante_médicinale" not in self.player.inventory.keys():
-            print("\n💀 Vous êtes entré dans une salle mortelle sans protection...")
+        if (current_room.name == "Serial Killer" and
+            "plante_médicinale" not in self.player.inventory.keys()):
+            print("\n💀 Vous êtes entré dans une "
+                  "salle mortelle sans protection...")
             print("""
         Tingen renverse accidentellement un poison mortel
         dans la salle Serial Killer.
@@ -346,7 +424,16 @@ class Game:
 
     # Process the command entered by the player
     def process_command(self, command_string) -> None:
+        """
+        Traite une commande entrée par le joueur.
 
+        Args:
+            command_string (str): La commande entrée par le joueur 
+            sous forme de chaîne de caractères.
+
+        Cette méthode analyse la commande, vérifie si elle est valide,
+        et exécute l'action correspondante.
+        """
         if command_string.strip() == "":
             return
 
@@ -357,7 +444,8 @@ class Game:
 
         # If the command is not recognized, print an error message
         if command_word not in self.commands.keys():
-            print(f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
+            print(f"\nCommande '{command_word}' non reconnue. Entrez"
+                  " 'help' pour voir la liste des commandes disponibles.\n")
         # If the command is recognized, execute it
         else:
             command = self.commands[command_word]
@@ -365,24 +453,33 @@ class Game:
 
     # Print the welcome message
     def print_welcome(self):
+        """
+        Affiche le message de bienvenue et l'introduction du jeu.
+
+        Cette méthode imprime un message de bienvenue personnalisé pour le joueur,
+        décrit le contexte initial du jeu, et fournit des instructions de base.
+        Elle affiche également la description de la pièce de départ du joueur.
+        """
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
         print("Entrez 'help' si vous avez besoin d'aide.\n")
-        print("Vous vous réveillez en sursaut dans les vestiaires,\n" 
+        print("Vous vous réveillez en sursaut dans les vestiaires,\n"
                 "le cœur battant, le souffle court, la tête lourde et l’esprit embrumé.\n"
                 "Les souvenirs de votre journée de travail sont fragmentés,\n"
                 "comme effacés, engloutis par l’obscurité.\n"
                 "Le silence du musée est total, presque étouffant.\n"
                 "En tentant de vous relever, une lumière étincelante jaillit soudain du\n" 
-                "hall du musée, déchirant l’obscurité et projetant des ombres inquiétantes sur les murs.\n"
+                "hall du musée, déchirant l’obscurité et projetant "
+                "des ombres inquiétantes sur les murs.\n"
                 "Quelque chose ne tourne pas rond. Le musée n’est plus endormi… il vous observe.\n"
                 "Avant d’oser sortir, une chose est certaine : \n"
                 "Vous devez vous armer de courage.")
         print(self.player.current_room.get_long_description())
-        
+
 def main():
+    """Fonction principale pour lancer le jeu."""
     # Create a game object and play the game
     Game().play()
-    
+
 
 if __name__ == "__main__":
     main()

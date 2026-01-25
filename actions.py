@@ -1,3 +1,7 @@
+"""
+Ce module contient les actions pour un jeu d'aventure textuel. Il définit les actions
+que le joueur peut effectuer, telles que se déplacer, parler, regarder et interagir avec des objets.
+"""
 # Description: The actions module.
 
 # The actions module contains the functions that are called when a command is executed.
@@ -18,7 +22,11 @@ MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
 
 class Actions:
-
+    """    
+    Gère les actions qu'un joueur peut effectuer dans le jeu.
+    Cela inclut des actions comme déplacer le joueur,
+    interagir avec l'environnement et gérer l'état du jeu.
+    """
     @staticmethod
     def go(game, list_of_words, number_of_parameters):
         """
@@ -159,6 +167,7 @@ class Actions:
         print()
         return True
 
+    @staticmethod
     def back(game,list_of_words,number_of_parameters):
         """
         Return the player to the previous room if possible.
@@ -191,6 +200,7 @@ class Actions:
         print("\n" + player.get_history())
         return True
 
+    @staticmethod
     def history(game, list_of_words, number_of_parameters):
         """
         Display the history of rooms visited by the player.
@@ -215,6 +225,7 @@ class Actions:
         return True
 
 
+    @staticmethod
     def look(game, list_of_words, number_of_parameters):
         """
         Perme d'avoir une vue des objets présents dans la pièce
@@ -240,6 +251,7 @@ class Actions:
 
         return True
 
+    @staticmethod
     def take(game, list_of_words, number_of_parameters):
         """
         Permet de prendre un objet présent dans la pièce
@@ -262,7 +274,7 @@ class Actions:
 
         item_name = " ".join(list_of_words[1:]).lower()
         room = player.current_room
-        player_inventory = game.player.inventory
+        #player_inventory = game.player.inventory
 
         if item_name not in room.inventory :
             print(f"Il n'y a pas l'objet '{item_name}' ici.")
@@ -277,7 +289,7 @@ class Actions:
             print("Vous ne pouvez pas prendre cet objet : inventaire trop lourd. ")
             print(f"Poids actuel : {player.current_weight()} / {player.max_weight} kg")
             return False
-        
+
         #ajouter l'item à l'inventaire du joueur
         player.inventory[item_name] = item
 
@@ -286,11 +298,12 @@ class Actions:
 
         #Item par rapport à la quête
         player.quest_manager.check_item_objectives(item.name)
-        
+
         print(f"Vous avez pris l'objet : {item.name}")
 
         return True
 
+    @staticmethod
     def drop(game, list_of_words, number_of_parameters):
         """
         Permet de déposer un objet dans la pièce courante.
@@ -313,7 +326,7 @@ class Actions:
 
         item_name = " ".join(list_of_words[1:]).lower()
         room = player.current_room
-        player_inventory = game.player.inventory
+        #player_inventory = game.player.inventory
 
         if item_name not in player.inventory :
             print(f"Vous n'avez pas l'objet '{item_name}' dans votre inventaire.")
@@ -329,6 +342,7 @@ class Actions:
 
         return True
 
+    @staticmethod
     def check(game, list_of_words, number_of_parameters):
         """
         Permet de voir les item contenu dans l'inventaire du joueur.
@@ -366,7 +380,19 @@ class Actions:
 
         return True
 
+    @staticmethod
     def talk(game, list_of_words,number_of_parameters):
+        """
+        Permet de parler à un personnage non-joueur.
+
+        Args:
+            game (Game): L'objet du jeu.
+            list_of_words (list): Liste des mots de la commande.
+            number_of_parameters (int): Nombre de paramètres attendus.
+
+        Returns:
+            bool: True si la commande a été exécutée avec succès, False sinon.
+        """
         if len(list_of_words) != number_of_parameters + 1:
             command_word = list_of_words[0]
             print(MSG1.format(command_word=command_word))
@@ -374,7 +400,7 @@ class Actions:
 
         character_name = " ".join(list_of_words[1:]).lower()
         current_room = game.player.current_room
-        
+
         characters_lower = {
             name.lower(): char
             for name, char in current_room.characters.items()
@@ -392,7 +418,8 @@ class Actions:
 
         return True
 
-    
+
+    @staticmethod
     def charge(game, list_of_words, number_of_parameters):
         """
         Permet de charger l'item beamer contenu dans l'inventaire du joueur.
@@ -419,7 +446,7 @@ class Actions:
         if "beamer" not in player_inventory:
             print("Vous devez avoir le beamer dans votre inventaire pour le charger.")
             return False
-        
+
         beamer = player.inventory["beamer"]
         # Charger le beamer
         beamer.charge = True
@@ -427,7 +454,8 @@ class Actions:
 
         print(f"Le beamer est chargé avec la pièce : {beamer.charged_room.name}.")
         return True
-    
+
+    @staticmethod
     def use(game, list_of_words, number_of_parameters):
         """
         Permet d'utiliser l'item beamer contenu dans l'inventaire du joueur.
@@ -448,7 +476,7 @@ class Actions:
             return False
         player = game.player
 
-        player_inventory = game.player.inventory
+        #player_inventory = game.player.inventory
 
         # Vérifier que le beamer est dans l'inventaire
         if "beamer" not in player.inventory:
@@ -461,7 +489,7 @@ class Actions:
         if not beamer.charge:
             print("Le beamer n'est pas chargé.")
             return False
-        
+
         # Téléportation
         player.current_room = beamer.charged_room
         player.history.append(player.current_room)
@@ -469,7 +497,7 @@ class Actions:
         print(f"🌀TELEPORTATION🌀! Vous arrivez dans la pièce {player.current_room.name}.")
         print(player.current_room.get_long_description())
         return True
-    
+
     @staticmethod
     def quests(game, list_of_words, number_of_parameters):
         """
@@ -513,7 +541,7 @@ class Actions:
         # Show all quests
         game.player.quest_manager.show_quests()
         return True
-    
+
 
     @staticmethod
     def quest(game, list_of_words, number_of_parameters):
@@ -569,7 +597,7 @@ class Actions:
         # Show quest details
         game.player.quest_manager.show_quest_details(quest_title, current_counts)
         return True
-    
+
 
     @staticmethod
     def activate(game, list_of_words, number_of_parameters):
