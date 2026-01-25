@@ -355,7 +355,7 @@ class Quest:
                             self.complete_objective(objective, player)
                             return True
         return False
-    
+
     def check_item_objective(self, item_name, player=None):
         """
         Check if collecting an item completes an objective.
@@ -581,7 +581,7 @@ class QuestManager:
             quest.check_action_objective(action, target, self.player)
             if quest.is_completed:
                 self.active_quests.remove(quest)
-        
+
         objective_variations = [
             f"{action} {target}",
             f"{action} avec {target}",
@@ -770,4 +770,3 @@ class QuestManager:
             quest.check_item_objective(item_name, self.player)
             if quest.is_completed:
                 self.active_quests.remove(quest)
-
