@@ -42,3 +42,5 @@ Le jeu est structuré autour de plusieurs fichiers, chacun regroupant des foncti
 ## Perspectives de développement
 
 ## Conclusion:
+
+mettre l'assistance à la redaction sur l'Ia

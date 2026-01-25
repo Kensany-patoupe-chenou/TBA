@@ -4,7 +4,7 @@ class Room:
     """
     Class Room
 
-    Represents a room in the game world. Each room has a name, a description,
+    Represents a room in the game world. Each room has a name, a description
     and a set of exits that point to other rooms
 
         Attributs:

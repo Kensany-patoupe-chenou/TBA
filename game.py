@@ -254,6 +254,40 @@ class Game:
                         # Get the command from the player
             self.next_turn=False
             self.process_command(input("> "))
+            if self.win():
+                print("\n🎉 Félicitations ! Vous avez terminé toutes les quêtes !\n")
+                print("""
+            Toutes les quêtes sont accomplies.
+            Tous les fragments du passé ont trouvé leur place.
+
+            Gripsou s’avance, lentement.
+            Pour la première fois, il sourit.
+
+            « Les clés me sont rendues…
+            Le musée peut enfin se taire. »
+
+            Les murs cessent de murmurer.
+            Les objets redeviennent immobiles.
+            Les ombres se figent.
+
+            Vous avez compris l’âme du musée.
+            Vous savez désormais qu’il n’était pas maudit…
+            mais vivant.
+
+            Avant de disparaître, Gripsou vous fait une dernière demande :
+            ne jamais révéler ce que vous avez vu ici.
+
+            Certains secrets doivent rester enfermés,
+            et disparaître dans les méandres de l’ombre.
+            """)
+                print("\n🏆 Vous avez gagné la partie.\n")
+                self.finished = True
+                break
+
+            if self.loose():
+                self.finished = True
+                print("💥 GAME OVER 💥")
+                break
             
             if self.player.current_room.name == "Hall inférieur" and not self._lower_hall_visited:
                 self._lower_hall_visited = True
@@ -275,6 +309,39 @@ class Game:
                             if DEBUG and moved:
                                 print(f"{character.name} vous a suivi dans la pièce {character.current_room.name}.\n")   
         return None
+        
+    def win(self):
+        """
+        Vérifie si le joueur a gagné la partie.
+        Le joueur gagne si toutes les quêtes sont complétées.
+        """
+        quests = self.player.quest_manager.get_all_quests()
+        return all(quest.is_completed for quest in quests)
+
+    def loose(self):
+        """
+        Vérifie si le joueur a perdu la partie.
+        """
+        current_room = self.player.current_room
+        inventory = self.player.inventory
+
+        if current_room.name == "Serial Killer" and "plante_médicinale" not in self.player.inventory.keys():
+            print("\n💀 Vous êtes entré dans une salle mortelle sans protection...")
+            print("""
+        Tingen renverse accidentellement un poison mortel
+        dans la salle Serial Killer.
+
+        L’air devient irrespirable.
+
+        Sans la plante médicinale pour vous sauver,
+        votre corps cède.
+
+        Le musée vous engloutit
+        dans son silence éternel.
+        """)
+            return True
+
+        return False
 
     # Process the command entered by the player
     def process_command(self, command_string) -> None:
