@@ -118,6 +118,10 @@ Pour réussir et sortir du musée d'ici l’aube, le joueur doit donc gérer ses
 ## Guide développeur
 Cette partie du rapport traite de la conception et de la structure du jeu. Elle détaille l’architecture du projet, l’organisation des classes et leurs relations, notamment à travers un diagramme de classes.
 
+### Diagramme de classes
+Le diagramme de classes ci-dessous présente la structure du jeu et les relations entre les différentes classes qui le composent. Il permet de visualiser l’organisation générale du projet et les interactions entre ses principaux éléments.
+
+```mermaid
 classDiagram
     %% Classes principales
     class Game {
@@ -267,10 +271,7 @@ classDiagram
     note for QuestManager "Gère les quêtes du joueur et vérifie les objectifs."
     note for Item "Représente un objet que le joueur peut ramasser ou déposer. Peut être chargé (ex: beamer)."
     note for Player "Représente le joueur. Peut se déplacer, transporter des objets et interagir avec les PNJ."
-
-
-### Diagramme de classes
-Le diagramme de classes ci-dessous présente la structure du jeu et les relations entre les différentes classes qui le composent. Il permet de visualiser l’organisation générale du projet et les interactions entre ses principaux éléments.
+```
 
 Le jeu est structuré autour de plusieurs fichiers, chacun regroupant des fonctionnalités spécifiques et correspondant à une partie précise de son fonctionnement. La liste ci-dessous présente les différents fichiers constituant le projet :
 
