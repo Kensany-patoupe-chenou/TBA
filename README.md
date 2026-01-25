@@ -1,6 +1,6 @@
 # Rapport de projet TBA : Fantaseum
 
-Ce dépôt contient le rapport du projet *Fantaseum*, un jeu d’aventure et de réflexion développé dans le cadre d’un projet académique.
+Ce dépôt contient le rapport du projet *Fantaseum*: fantastic museum, un jeu d’aventure et de réflexion développé dans le cadre d’un projet académique.
 Ce rapport a pour objectif de présenter le jeu, son fonctionnement et sa conception. Il comprend un guide utilisateur décrivant l’installation du jeu, son univers, les règles et la manière d’y jouer, ainsi qu’un guide développeur détaillant l’architecture du projet et le diagramme de classes. Enfin, il expose les perspectives de développement envisagées pour l’évolution du jeu.
 
 ## Guide utilisateur :
