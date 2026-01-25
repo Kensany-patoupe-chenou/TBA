@@ -564,7 +564,13 @@ class QuestManager:
             quest.check_action_objective(action, target, self.player)
             if quest.is_completed:
                 self.active_quests.remove(quest)
-
+        
+        objective_variations = [
+            f"{action} {target}",
+            f"{action} avec {target}",
+            f"{action} le {target}",
+            f"{action} la {target}"
+        ]
 
     def check_counter_objectives(self, counter_name, current_count):
         """

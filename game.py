@@ -51,6 +51,14 @@ class Game:
         self.commands["charge"] = charge
         use = Command("use", " : utilise le beamer pour se téléporter", Actions.use, 1)
         self.commands["use"] = use
+        quest = Command("quest", " : voir les détails à propos d'une quête", Actions.quest, 1)
+        self.commands["quest"] = quest
+        activate = Command("activate", " : permet d'activer une quête spécifique", Actions.activate, 1)
+        self.commands["activate"] = activate
+        rewards = Command("rewards", " : permet de voir toutes les récompenses gagnées par le joueur", Actions.rewards, 0)
+        self.commands["rewards"] = rewards
+        quests = Command("quests", " : permet de lister les quêtes", Actions.quests, 0)
+        self.commands["quests"] = quests
 
         
         # Setup rooms
@@ -175,22 +183,25 @@ class Game:
         # Setup PNJ
         
         gripsou = Character("Gripsou", 
-                            "le spectre du musée, gardien des œuvres et des souvenirs.", 
-                            lower_hall, ["Je suis Gripsou, ancien conservateur de ce musée.\n"
+                            " le spectre du musée, gardien des œuvres et des souvenirs.", 
+                            lower_hall, ["Salut, voyageur… \n"
+                                        "Je suis Gripsou, ancien conservateur de ce musée.\n"
                                         "Quand l’au-delà m’a appelé, j’ai détourné le regard,\n"
                                         "incapable d’abandonner ce lieu que j’aimais tant,\n"
                                         "et auquel j’ai dédié ma vie.\n"
-                                        "Depuis, mon âme y demeure."],
+                                        "Depuis, mon âme y demeure.\n"],
                             movement_type="random")
         lower_hall.characters["Gripsou"] = gripsou
         gripsou._first_meet = True
         print(gripsou)
         
         tingen = Character("Tingen",
-                           "l’alter ego créé par Gripsou, né de son amour profond pour le musée.",
+                           " l’alter ego créé par Gripsou, né de son amour profond pour le musée.",
                            lower_hall,["Salut, voyageur… \n"
-                                       "C’est à travers ma voix que tu pourras entendre la sienne,"
-                                       "et à travers moi que ses secrets te seront révélés.."],
+                                       "Je suis Tingen, née de l'amour profond de Gripsou pour ces lieux \n"
+                                       "Je te servirai de compagnon dans cette aventure et resterai à tes côtes \n"
+                                       "C’est à travers ma voix que tu pourras entendre la sienne, \n"
+                                       "et à travers moi que ses secrets te seront révélés..\n"],
                            movement_type="companion")
         lower_hall.characters["Tingen"] = tingen
         print(tingen)
@@ -215,7 +226,7 @@ class Game:
         find_quest = Quest(
             title="Trouvaille ancestrale",
             description="Récupérez la pierre philosophale dans le panthéon des dieux et des héros.",
-            objectives=["Prendre l'item amulet d'anubis dans la salle Mythologie et légendes"],
+            objectives=["take pierre_philosophale"],
             reward="Petite augmentation de l'espérance de vie"
         )
 
@@ -258,11 +269,11 @@ class Game:
                             if self.player.current_room.name != "Hall inferieur":
                                 moved = character.move()
                                 if DEBUG and moved:
-                                    print(f"{character.name} s'est déplacé vers la pièce {character.current_room.name}.")
+                                    print(f"{character.name} s'est déplacé vers la pièce {character.current_room.name}.\n")
                         elif character.movement_type == "companion":
                             moved = character.move(self.player.current_room)
                             if DEBUG and moved:
-                                print(f"{character.name} vous suit dans {character.current_room.name}.")   
+                                print(f"{character.name} vous a suivi dans la pièce {character.current_room.name}.\n")   
         return None
 
     # Process the command entered by the player

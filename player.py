@@ -40,9 +40,53 @@ class Player():
         self.max_weight = 2.5
         self.quest_manager = QuestManager()
         self.rewards = []
+        self.move_count = 0
+
     
     # Define the move method.
     def move(self, direction):
+        """
+        Move the player in the specified direction.
+        
+        Args:
+            direction (str): The direction to move (N, E, S, O).
+            
+        Returns:
+            bool: True if the move was successful, False otherwise.
+            
+        Examples:
+        
+        >>> from room import Room
+        >>> player = Player("Dave")
+        >>> room1 = Room("Room1", "in room 1")
+        >>> room2 = Room("Room2", "in room 2")
+        >>> room3 = Room("Room3", "in room 3")
+        >>> room1.exits = {"N": room2, "E": None, "S": None, "O": None}
+        >>> room2.exits = {"S": room1, "E": room3, "S": None, "O": None}
+        >>> player.current_room = room1
+        >>> player.move_count
+        0
+        >>> player.move("N")
+        <BLANKLINE>
+        Vous êtes in room 2
+        <BLANKLINE>
+        Sorties: E
+        <BLANKLINE>
+        True
+        >>> player.move_count
+        1
+        >>> player.current_room.name
+        'Room2'
+        >>> player.move("E")
+        <BLANKLINE>
+        Vous êtes in room 3
+        <BLANKLINE>
+        Sorties:
+        <BLANKLINE>
+        True
+        >>> player.move_count
+        2
+        """
         # Get the next room from the exits dictionary of the current room.
         direction = direction.upper()
         if direction in self.current_room.exits:
@@ -55,10 +99,22 @@ class Player():
                 if not self.history or self.history[-1] != self.current_room:
                     self.history.append(next_room)
 
+                # Increment move counter and check movement objectives
+                self.move_count += 1
+                self.quest_manager.check_counter_objectives("Se déplacer", self.move_count)
+                
+                # Check room visit objectives
+                self.quest_manager.check_room_objectives(self.current_room.name)
+
                 return True
             # If the next room is None, print an error message and return False.
             print("\nAucune porte dans cette direction !\n")
             return False
+
+        print("\nDirection invalide.\n")
+        return False
+        
+
     #Define the get_history method
     def get_history(self):
         """
