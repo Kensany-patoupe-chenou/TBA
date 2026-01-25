@@ -75,6 +75,7 @@ class Actions:
         # Move the player in the direction specified by the parameter.
         player.move(valid_direction)
         print(player.current_room.get_long_description())
+        game.next_turn = True
         return True
 
     @staticmethod
@@ -365,12 +366,17 @@ class Actions:
             print(MSG1.format(command_word=command_word))
             return False
 
-        character_name = list_of_words[1].lower()
+        character_name = " ".join(list_of_words[1:]).lower()
         current_room = game.player.current_room
+        
+        characters_lower = {
+            name.lower(): char
+            for name, char in current_room.characters.items()
+            }
 
-        if character_name in current_room.characters:
-            character = current_room.characters[character_name]
-            character.get_msg()
+        if character_name in characters_lower:
+            character = characters_lower[character_name]
+            print(f"{character.name} dit : {character.get_msg(current_room)}")
         else:
             print(f"Il n'y a pas de personnage nommé {character_name} ici.")
         return True

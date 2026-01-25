@@ -20,6 +20,7 @@ class Game:
         self.commands = {}
         self.player = None
         self.items = []
+        self.next_turn=False
     
     # Setup the game
     def setup(self):
@@ -44,7 +45,7 @@ class Game:
         self.commands["drop"] = drop
         check = Command("ckeck", " : permet de voir les objets présent dans l'inventaire", Actions.check, 0)
         self.commands["check"] = check
-        talk = Command("talk", " <nom> : parler à un personnage", Actions.talk, 1)
+        talk = Command("talk", " <nom> : un personnage vous parle", Actions.talk, 1)
         self.commands["talk"] = talk
         charge = Command("charge", " : charge le beamer avec la pièce actuelle", Actions.charge, 1)
         self.commands["charge"] = charge
@@ -181,7 +182,8 @@ class Game:
                                         "et auquel j’ai dédié ma vie.\n"
                                         "Depuis, mon âme y demeure."],
                             movement_type="random")
-        lower_hall.characters[gripsou.name] = gripsou
+        lower_hall.characters["Gripsou"] = gripsou
+        gripsou._first_meet = True
         print(gripsou)
         
         tingen = Character("Tingen",
@@ -190,7 +192,7 @@ class Game:
                                        "C’est à travers ma voix que tu pourras entendre la sienne,"
                                        "et à travers moi que ses secrets te seront révélés.."],
                            movement_type="companion")
-        lower_hall.characters[tingen.name] = tingen
+        lower_hall.characters["Tingen"] = tingen
         print(tingen)
        
 
@@ -235,20 +237,32 @@ class Game:
         
         self.setup()
         self.print_welcome()
+        self._lower_hall_visited = False
         # Loop until the game is finished
         while not self.finished:
                         # Get the command from the player
+            self.next_turn=False
             self.process_command(input("> "))
+            
+            if self.player.current_room.name == "Hall inférieur" and not self._lower_hall_visited:
+                self._lower_hall_visited = True
+                if "Gripsou" in self.player.current_room.characters:
+                    gripsou = self.player.current_room.characters["Gripsou"]
+                    print(f"\n{gripsou.name} dit : {gripsou.get_msg(self.player.current_room)}")
+                
                         
-            if self.player.current_room.name != "lower_hall":
+            if self.next_turn:
                 for room in self.rooms:
                     for character in list(room.characters.values()):
                         if character.movement_type == "random":
-                            moved = character.move()
-                            if DEBUG and moved:
-                                print(f"{character.name} s'est déplacé vers la pièce {character.current_room.name}.")    
+                            if self.player.current_room.name != "Hall inferieur":
+                                moved = character.move()
+                                if DEBUG and moved:
+                                    print(f"{character.name} s'est déplacé vers la pièce {character.current_room.name}.")
                         elif character.movement_type == "companion":
-                            moved = character.move(self.player.current_room)   
+                            moved = character.move(self.player.current_room)
+                            if DEBUG and moved:
+                                print(f"{character.name} vous suit dans {character.current_room.name}.")   
         return None
 
     # Process the command entered by the player

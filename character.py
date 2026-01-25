@@ -44,14 +44,12 @@ class Character:
     def get_msg(self,current_room):
         
         """Retourne le message actuel du personnage."""
-            
         if not self.msgs:
-            self.messages = self.used_messages
-            self.used_messages = []
-        
-        msg = self.messages.pop(0)
-        self.used_messages.append(msg)
-        print(msg)
+            return "Ce personnage n'a rien à dire."
+
+        msg = self.msgs[self.msg_index]
+        self.msg_index = (self.msg_index + 1) % len(self.msgs)
+        return msg
     
     def move(self, player_current_room=None):
         """
