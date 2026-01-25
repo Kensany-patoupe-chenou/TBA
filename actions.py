@@ -383,8 +383,13 @@ class Actions:
         if character_name in characters_lower:
             character = characters_lower[character_name]
             print(f"{character.name} dit : {character.get_msg(current_room)}")
+
+            game.player.quest_manager.check_action_objectives("talk", character.name)
+
         else:
             print(f"Il n'y a pas de personnage nommé {character_name} ici.")
+            return False
+
         return True
 
     

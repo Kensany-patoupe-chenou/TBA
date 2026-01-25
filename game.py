@@ -232,8 +232,8 @@ class Game:
 
         awareness_quest = Quest(
             title="Avide de savoir",
-            description="Communiquez avec Tingen.",
-            objectives=["Interagissez avec Tingen"],
+            description="Parlez avec Tingen pour en savoir plus sur qui elle est.",
+            objectives=["talk Tingen"],
             reward="Augmentation du QI"
         )
 
