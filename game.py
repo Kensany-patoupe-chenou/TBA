@@ -189,7 +189,9 @@ class Game:
                                         "Quand l’au-delà m’a appelé, j’ai détourné le regard,\n"
                                         "incapable d’abandonner ce lieu que j’aimais tant,\n"
                                         "et auquel j’ai dédié ma vie.\n"
-                                        "Depuis, mon âme y demeure.\n"],
+                                        "Depuis, mon âme y demeure.\n"
+                                        "Pour vous acoompagner durant toute cette aventure\n"
+                                        "Tingen, une extension de moi-même sera à vos côtés\n"],
                             movement_type="random")
         lower_hall.characters["Gripsou"] = gripsou
         gripsou._first_meet = True
