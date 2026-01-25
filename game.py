@@ -85,13 +85,13 @@ class Game:
         # Create exits for rooms
 
         egypt.exits = {"N" : None, "E" : None, "S" : upper_hall, "O" : None,"U": None,"D": None}
-        jumanji.exits = {"N" : serial_killer, "E" : None, "S" : None, "O" : lower_hall,"U": None,"D": None}
+        jumanji.exits = {"N" : None, "E" : None, "S" : serial_killer, "O" : lower_hall,"U": None,"D": None}
         slavery.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,"D": None}
         mythology.exits = {"N" : None, "E" :upper_hall, "S" : None, "O" : None,"U": None,"D": None}
         astronomy.exits = {"N" : None, "E" : None, "S" : None, "O" : upper_hall,"U": None,"D": None}
         locker_room.exits = {"N" : None, "E" : lower_hall, "S" : None, "O" : None,"U": None,"D": None}
-        serial_killer.exits = {"N" : None, "E" : None, "S" : jumanji, "O" : lower_hall,"U": None,"D": None}
-        lower_hall.exits = {"N" : None, "E" : serial_killer, "S" : None, "O" : slavery,"U": upper_hall,"D": None}
+        serial_killer.exits = {"N" : jumanji, "E" : None, "S" : None, "O" : lower_hall,"U": None,"D": None}
+        lower_hall.exits = {"N" : None, "E" : jumanji, "S" : None, "O" : slavery,"U": upper_hall,"D": None}
         upper_hall.exits = {"N" : egypt, "E" : astronomy, "S" : None, "O" : mythology,"U": None,"D": lower_hall}
 
         # Setup items
