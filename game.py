@@ -226,7 +226,7 @@ class Game:
         find_quest = Quest(
             title="Trouvaille ancestrale",
             description="Récupérez la pierre philosophale dans le panthéon des dieux et des héros.",
-            objectives=["take pierre_philosophale"],
+            objectives=["take pierre philosophale"],
             reward="Petite augmentation de l'espérance de vie"
         )
 

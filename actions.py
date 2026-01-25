@@ -271,11 +271,7 @@ class Actions:
         #Récupération de l'item
         item = room.inventory[item_name]
 
-        #Item par rapport à la quête
-        player.quest_manager.check_quests(
-            "take",
-            item.name
-        )
+
         #Verification du poids de l'item
         if player.current_weight() + item.weight > player.max_weight :
             print("Vous ne pouvez pas prendre cet objet : inventaire trop lourd. ")
@@ -287,6 +283,10 @@ class Actions:
 
         #Retirer l'item de la pièce
         del room.inventory[item_name]
+
+        #Item par rapport à la quête
+        player.quest_manager.check_item_objectives(item.name)
+        
         print(f"Vous avez pris l'objet : {item.name}")
 
         return True

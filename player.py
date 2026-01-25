@@ -38,7 +38,7 @@ class Player():
         self.history = []
         self.inventory={}
         self.max_weight = 2.5
-        self.quest_manager = QuestManager()
+        self.quest_manager = QuestManager(self)
         self.rewards = []
         self.move_count = 0
 

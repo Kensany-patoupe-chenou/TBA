@@ -355,6 +355,23 @@ class Quest:
                             self.complete_objective(objective, player)
                             return True
         return False
+    
+    def check_item_objective(self, item_name, player=None):
+        """
+        Check if collecting an item completes an objective.
+        """
+        item_name = item_name.lower().replace("_", " ")
+
+        item_objectives = [
+            f"Récupérer {item_name}",
+            f"Prendre {item_name}",
+            f"take {item_name}"
+        ]
+
+        for objective in item_objectives:
+            if self.complete_objective(objective, player):
+                return True
+        return False
 
 
     def __str__(self):
@@ -743,3 +760,14 @@ class QuestManager:
             print(quest.get_details(current_counts))
         else:
             print(f"\nQuête '{quest_title}' non trouvée.\n")
+
+
+    def check_item_objectives(self, item_name):
+        """
+        Check all active quests for item-related objectives.
+        """
+        for quest in self.active_quests[:]:
+            quest.check_item_objective(item_name, self.player)
+            if quest.is_completed:
+                self.active_quests.remove(quest)
+
