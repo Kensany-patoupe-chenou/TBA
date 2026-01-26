@@ -34,6 +34,8 @@ class Game:
         self.player = None
         self.items = []
         self.next_turn=False
+        self.characters = []
+
 
     # Setup the game
     def setup(self):
@@ -277,6 +279,10 @@ class Game:
         lower_hall.characters["Tingen"] = tingen
         print(tingen)
 
+        self.characters.append(gripsou)
+        self.characters.append(tingen)
+
+
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
@@ -371,21 +377,26 @@ class Game:
                     print(f"\n{gripsou.name} dit : {gripsou.get_msg(self.player.current_room)}")
 
 
+    
             if self.next_turn:
-                for room in self.rooms:
-                    for character in list(room.characters.values()):
-                        if character.movement_type == "random":
-                            if self.player.current_room.name != "Hall inferieur":
-                                moved = character.move()
-                                if DEBUG and moved:
-                                    print(f"{character.name} s'est déplacé vers "
-                                          "la pièce {character.current_room.name}.\n")
-                        elif character.movement_type == "companion":
-                            moved = character.move(self.player.current_room)
+                for character in self.characters:
+                    if character.movement_type == "random":
+                        if self.player.current_room.name != "Hall inférieur":
+                            moved = character.move()
                             if DEBUG and moved:
-                                print(f"{character.name} vous a suivi dans "
-                                      "la pièce {character.current_room.name}.\n")
-        return None
+                                print(
+                                    f"{character.name} s'est déplacé vers "
+                                    f"la pièce {character.current_room.name}.\n"
+                                )
+
+                    elif character.movement_type == "companion":
+                        moved = character.move(self.player.current_room)
+                        if DEBUG and moved:
+                            print(
+                                f"{character.name} vous a suivi dans "
+                                f"la pièce {character.current_room.name}.\n"
+                            )
+
 
     def win(self):
         """
